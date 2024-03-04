@@ -1,0 +1,260 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: Source Code Pro;
+    color: black;
+}
+
+h1{
+    padding:0%;
+    font-size: 3vw;
+    text-align: left;
+    line-height: 40%;
+}
+h2{
+    margin:0;
+    font-size: 3.5vw;
+    text-align: left;
+    line-height: 30%;
+    color: deeppink;
+}
+
+p{
+    font-size:1.4vw;
+    padding-top:8%;
+    text-align: left;
+}
+
+.page-container {
+    display: flex;
+    width: 300%; /* Three pages, 100% each */
+    transition: transform 0.3s ease;
+}
+
+.page {
+    width: 33.33%; /* One-third of the container width */
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+#threeContainer {
+    width: 100vw;      /* Full width of the page section */
+    height: 100vh;    /* Full height, or adjust as needed */
+    position: absolute;
+    padding-left: 15%;
+    padding-bottom: 0%;
+    top: 0;
+    bottom:0;
+    left: 0;
+    z-index: 2;
+}
+
+#pageLeft, #pageRight {
+    padding: 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    background-color: white;
+}
+
+#EasterEgg {
+    background-color: white;
+}
+
+.sidebar {
+    width: 25%; /* Width of the sidebar */
+    background-color: whitesmoke;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Push button to the bottom */
+    padding: 20px; /* Padding for the sidebar */
+    height: 100vh; /* Make the sidebar full height of its container */
+}
+
+.sidebar-content {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.bullets {
+    padding: 0%;
+    padding-right: 10%;
+    font-size:1.2vw;
+    color:deeppink;
+}
+
+
+
+#sidebarButton {
+    position: relative;
+    background-color: lightgray; /* Button background color */
+    color: deeppink; /* Button text color */
+    font-size: 25px;
+    font-family: Source Code Pro;
+    border: none;
+    padding: 20px 20px; /* Adjust padding as needed */
+    cursor: pointer;
+    width: 100%; /* Button width to fill the sidebar */
+    text-align: left; /* Align button text to the left */
+    text-decoration: none; /* Remove underline from the link */
+    align-self: flex-end;
+    transition: all 0.3s ease;
+}
+
+#sidebarButton a {
+    color: inherit; /* Inherit text color */
+    text-decoration: none; /* Remove underline from the link */
+}
+
+#sidebarButton:hover {
+    background-color: #FF1493; /* Deep pink background color on hover */
+    transform: scale(1.05); /* Scale the button by 110% on hover */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow on hover */
+}
+
+.arrow-container-left, .arrow-container-right {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    pointer-events: none;
+}
+
+.arrow-left {
+    left: 0;
+    padding-right: 98vw;
+    font-size: 3vw;
+    color: black;
+    animation: blink-animation 1s infinite;
+}
+
+.arrow-right {
+    position:static;
+    right: 0;
+    padding-left: 98vw;
+    font-size: 3vw;
+    color: black;
+    animation: blink-animation 1s infinite;
+}
+
+/* Blinking Animation */
+@keyframes blink-animation {
+    50% { opacity: 0; }
+}
+
+.api-container {
+    position: relative;
+    height: 50vh;
+    width: 100;
+  }
+  .sketchfab {
+    height: 100%;
+    width: 100%;
+    border: 0;
+  }
+
+/* CSS code for styling the grid of divs in pageRight */
+.grid-container {
+    display: grid;
+    padding-left: 35%;
+    width: auto;
+    height: 100vh;
+    grid-template-columns: repeat(3, 1fr); /* Three columns */
+    grid-gap: 20px; /* Gap between grid items */
+    margin: 20px; /* Margin around the grid */
+    align-content: center; /* Vertically center-align grid items */
+    justify-items: center; /* Horizontally center-align grid items */
+}
+
+.grid-item {
+    background-color: lightgray; /* Background color of grid items */
+    text-align: center; /* Center-align text */
+    transition: transform 0.3s; /* Smooth transform transition */
+    width: 20vw; /* Take up one-third of the container width minus the gap */
+    height: 25vh; /* Take up the full height of the grid cell */
+    margin: 10px; /* Margin around each grid item */
+    border-radius: 10px;
+}
+
+.grid-item:hover {
+    transform: scale(1.2); /* Scale up on hover */
+    position: absolute; /* Overlay other grid items */
+    top: 0;
+    left: 35%; /* Adjust to match your sidebar width */
+    width: 75%; /* Expand to the right edge of the viewport */
+    height: 100vh; /* Expand to the full viewport height */
+    z-index: 999; /* Bring to front on hover */
+    background-color: lightgray; /* Background color on hover */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add shadow on hover */
+    overflow: auto; /* Enable scrolling if content overflows */
+}
+
+.grid-item p {
+    font-size: 2vw;
+    color:deeppink;
+    left: 10px; /* Adjust as needed */
+    padding: 0%;
+
+}
+
+.grid-item a {
+    display: block;
+    width: 80%; /* Adjust the desired width */
+    height: auto; /* Adjust the desired height */
+    text-align: left;
+    line-height: 20px; /* Vertically center-align the content */
+    background-color: #FF1493;
+    color: white;
+    text-decoration: none;
+    font-size: 12px; /* Adjust the font size */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    pointer-events: none;
+    position: relative;
+    left: 10px;
+    top: 20%;
+    transform: translateY(-50%);
+    opacity: 0;
+    }
+
+.grid-item img {
+    width: 100%;
+}
+
+.grid-item:hover p {
+    font-size: 3vw;
+    padding-top: 5%;
+}
+
+.grid-item:hover a {
+    opacity:100;
+    pointer-events: auto;
+}
+
+
+
+
+
+
+#eggContainer {
+    width: 100vw;      /* Full width of the page section */
+    height: 100vh;    /* Full height, or adjust as needed */
+    position: absolute;
+    padding-bottom: 0%;
+    top: 0;
+    bottom:0;
+    left: 0;
+    z-index: 2;
+}
