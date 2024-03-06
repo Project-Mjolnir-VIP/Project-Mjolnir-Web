@@ -28,12 +28,13 @@ function updatePages() {
     pageContainer.style.transform = transformValue;
 }
 
+
+
 const success = (api) => {
     // api.start will start loading the 3D model
     api.start(() => console.log("Sketchfab scene starts loading"));
     api.addEventListener("viewerready", () => console.log("Sketchfab scene is ready"))
   };
-  
   const loadSketchfab = (sceneuid, elementId) => {
     // To get started with Sketchfab, we need to create a client
     // object for a certain iframe in the DOM
@@ -50,6 +51,6 @@ const success = (api) => {
       camera: 0
     });
   };
-  
-  loadSketchfab("5c3e7d8351814b0b82036c10a22335da", "api-frame");
-  
+  document.addEventListener('DOMContentLoaded', function() {
+    loadSketchfab("7c4122660e514aa1b590f4691c33d9ac", "api-frame");
+});
