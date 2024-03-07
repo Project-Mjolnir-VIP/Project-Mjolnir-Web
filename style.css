@@ -91,10 +91,10 @@ p {
 }
 
 .LOGO {
-  width: 65%;
+  width: 68%;
   position: relative;
-  padding-left: 18%;
-  padding-top: 5%;
+  padding-left: 15%;
+  padding-top: 0;
 }
 
 #sidebarButton {
@@ -119,8 +119,8 @@ p {
 }
 
 #sidebarButton:hover {
-  background-color: silver; /* Deep pink background color on hover */
-  transform: scale(1.05); /* Scale the button by 110% on hover */
+  background-color: silver; 
+  transform: scale(1.05); 
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow on hover */
 }
 
