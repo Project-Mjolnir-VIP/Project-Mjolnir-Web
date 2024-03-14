@@ -53,4 +53,67 @@ const success = (api) => {
   };
   document.addEventListener('DOMContentLoaded', function() {
     loadSketchfab("7c4122660e514aa1b590f4691c33d9ac", "api-frame");
-});
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Create the overlay element and append it to the body
+    const overlay = document.createElement('img');
+    overlay.id = 'image-overlay';
+    document.body.appendChild(overlay);
+  
+    // Function to show the overlay
+    function showOverlay(src) {
+      overlay.src = src;
+      overlay.style.display = 'block'; // Show the overlay
+    }
+  
+    // Function to hide the overlay
+    function hideOverlay() {
+      overlay.style.display = 'none'; // Hide the overlay
+    }
+  
+    // Add hover event listeners to all images within the media gallery
+    document.querySelectorAll('.media-gallery img').forEach(img => {
+      img.addEventListener('mouseenter', function() {
+        showOverlay(this.src);
+      });
+      img.addEventListener('mouseleave', hideOverlay);
+    });
+  
+    // Optionally, hide the overlay when it's clicked, allowing users to return to the content
+    overlay.addEventListener('click', hideOverlay);
+  });
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.createElement('img');
+    overlay.id = 'image-overlay';
+    overlay.style.pointerEvents = 'none'; // Ignore mouse events
+    document.body.appendChild(overlay);
+  
+    const overlayBg = document.createElement('div');
+    overlayBg.id = 'overlay-background';
+    overlayBg.style.pointerEvents = 'none'; // Allow clicks to pass through
+    document.body.appendChild(overlayBg);
+  
+    // No need for debounce here, directly show/hide overlay
+    function showOverlay(src) {
+      overlay.src = src;
+      overlay.style.display = 'block';
+      overlayBg.style.display = 'block';
+    }
+  
+    function hideOverlay() {
+      overlay.style.display = 'none';
+      overlayBg.style.display = 'none';
+    }
+  
+    document.querySelectorAll('.media-gallery img').forEach(img => {
+      img.addEventListener('mouseenter', function() {
+        showOverlay(this.src);
+      });
+      img.addEventListener('mouseleave', hideOverlay);
+    });
+  
+    // Since pointer events are ignored, no need to attach click events to hide
+  });
+  

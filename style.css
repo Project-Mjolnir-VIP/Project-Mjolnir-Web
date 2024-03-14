@@ -1,10 +1,9 @@
 body {
   margin: 0;
   overflow: hidden;
-  font-family: Source Code Pro;
+  font-family: ubuntu;
   color: black;
 }
-
 h1 {
   padding: 0%;
   font-size: 3vw;
@@ -17,7 +16,6 @@ h2 {
   text-align: left;
   line-height: 30%;
 }
-
 p {
   font-size: 1.4vw;
   padding-top: 8%;
@@ -64,7 +62,7 @@ p {
 }
 
 .sidebar {
-  width: 24%; 
+  width: 24%;
   background-color: whitesmoke;
   position: absolute;
   top: 0;
@@ -73,21 +71,9 @@ p {
   z-index: 20;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; 
-  padding: 0%; 
-  height: 100vh; 
-}
-
-.sidebar-content {
-  padding: 5%;
-  padding-top: 0%;
-  flex-grow: 1;
-}
-
-.bullets {
+  justify-content: space-between;
   padding: 0%;
-  padding-right: 10%;
-  font-size: 1.2vw;
+  height: 100vh;
 }
 
 .LOGO {
@@ -95,18 +81,79 @@ p {
   position: relative;
   padding-left: 15%;
   padding-top: 0;
+  padding-bottom: 5%;
+}
+
+.sidebar-content {
+  padding: 0%;
+  padding-top: 0%;
+  margin: 0%;
+  flex-grow: 1;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.sidebar-content::-webkit-scrollbar {
+  display: none;
+}
+
+.description {
+  padding: 10%;
+  padding-top: 0%;
+  margin-top: 0%;
+}
+
+.description p {
+  font-size: 1.5vw;
+}
+
+.media-gallery {
+  display: flex;
+  position: relative;
+  flex-direction: column; /* Stacks images vertically */
+  padding-right: 2%;
+}
+
+.media-gallery img {
+  width: 100%; /* Adapt image width to the container */
+  height: auto; /* Maintain aspect ratio */
+  transition: opacity 0.5s ease; /* Smooth transition for the overlay effect */
+  cursor: zoom-in; /* Indicates the image can be zoomed in on hover */
+}
+
+#image-overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  display: none; /* Hidden by default */
+  max-width: 80vw;
+  max-height: 80vh;
+  object-fit: cover;
+}
+
+#overlay-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 9998; /* Just below the overlay image */
+  display: none; /* Hidden by default */
 }
 
 #sidebarButton {
   position: relative;
   color: black;
   font-size: 25px;
-  font-family: Source Code Pro;
+  font-family: ubuntu;
   border: none;
   padding: 15px 15px;
   z-index: 11;
   cursor: pointer;
-  width: 95%; 
+  width: 95%;
   text-align: center;
   text-decoration: none; /* Remove underline from the link */
   align-self: flex-end;
@@ -119,9 +166,25 @@ p {
 }
 
 #sidebarButton:hover {
-  background-color: silver; 
-  transform: scale(1.05); 
+  background-color: silver;
+  transform: scale(1.05);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow on hover */
+}
+
+.api-container {
+  pointer-events: auto;
+  position: absolute;
+  z-index: 10;
+  padding-left: 22%;
+  /* padding-right: 10%; */
+  height: 100vh;
+  width: 74%;
+}
+.sketchfab {
+  pointer-events: auto;
+  height: 100%;
+  width: 100%;
+  border: 0;
 }
 
 .arrow-container-left,
@@ -159,95 +222,19 @@ p {
   }
 }
 
-.api-container {
-  pointer-events: auto;
-  position: absolute;
-  z-index: 10;
-  padding-left: 22%;
-  /* padding-right: 10%; */
-  height: 100vh;
-  width: 74%;
+.Resources {
+  padding: 5%;
 }
-.sketchfab {
-  pointer-events: auto;
+
+.manual-gallery {
+  display: flex;
+  flex-direction: column; /* Stacks images vertically */
+  overflow-y: auto;
   height: 100%;
+}
+
+.manual-gallery img {
   width: 100%;
-  border: 0;
-}
-
-.grid-container {
-  display: grid;
-  padding-left: 35%;
-  width: auto;
-  height: 100vh;
-  grid-template-columns: repeat(3, 1fr); /* Three columns */
-  grid-gap: 20px; /* Gap between grid items */
-  margin: 20px; /* Margin around the grid */
-  align-content: center; /* Vertically center-align grid items */
-  justify-items: center; /* Horizontally center-align grid items */
-}
-
-.grid-item {
-  background-color: lightgray; /* Background color of grid items */
-  text-align: center; /* Center-align text */
-  transition: transform 0.3s; /* Smooth transform transition */
-  width: 20vw; /* Take up one-third of the container width minus the gap */
-  height: 25vh; /* Take up the full height of the grid cell */
-  margin: 10px; /* Margin around each grid item */
-  border-radius: 10px;
-}
-
-.grid-item:hover {
-  transform: scale(1.2); /* Scale up on hover */
-  position: absolute; /* Overlay other grid items */
-  top: 0;
-  left: 35%; /* Adjust to match your sidebar width */
-  width: 75%; /* Expand to the right edge of the viewport */
-  height: 100vh; /* Expand to the full viewport height */
-  z-index: 999; /* Bring to front on hover */
-  background-color: lightgray; /* Background color on hover */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add shadow on hover */
-  overflow: auto; /* Enable scrolling if content overflows */
-}
-
-.grid-item p {
-  font-size: 2vw;
-  color: deeppink;
-  left: 10px; /* Adjust as needed */
-  padding: 0%;
-}
-
-.grid-item a {
-  display: block;
-  width: 80%; /* Adjust the desired width */
-  height: auto; /* Adjust the desired height */
-  text-align: left;
-  line-height: 20px; /* Vertically center-align the content */
-  background-color: #ff1493;
-  color: white;
-  text-decoration: none;
-  font-size: 12px; /* Adjust the font size */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  pointer-events: none;
-  position: relative;
-  left: 10px;
-  top: 20%;
-  transform: translateY(-50%);
-  opacity: 0;
-}
-
-.grid-item img {
-  width: 100%;
-}
-
-.grid-item:hover p {
-  font-size: 3vw;
-  padding-top: 5%;
-}
-
-.grid-item:hover a {
-  opacity: 100;
-  pointer-events: auto;
+  height: auto;
+  object-fit: cover;
 }
