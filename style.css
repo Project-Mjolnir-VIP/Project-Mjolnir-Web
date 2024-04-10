@@ -140,7 +140,7 @@ p {
   /* Other styling as needed, similar to other sidebars */
   opacity: 0.8; /* Make them half transparent */
   transform: translateX(15%); /* Move to the right by 10% of their own width */
-  transition: transform 0.5s ease; 
+  transition: transform 0.5s ease;
 }
 
 .sidebar {
@@ -156,28 +156,31 @@ p {
   justify-content: space-between;
   padding: 0%;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.8);  transform: translateX(15%); /* Move to the right by 10% of their own width */
-  transition: transform 0.5s ease; 
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: translateX(15%); /* Move to the right by 10% of their own width */
+  transition: transform 0.5s ease;
 }
 
 .LOGO {
-  width: 68%;
-  position: relative;
-  padding-left: 16%;
+  width: 18vw;
+  position: absolute;
+  padding-left: 12%;
   padding-top: 2%;
+  padding-bottom: 0%;
 }
 
 .top-sidebar h1 {
-  position: inherit;
+  position: relative;
   padding: 5%;
+  padding-top: 22vw;
+  font-size: 2.5vw;
   text-align: center;
-  top: 32%;
 }
 
 .navButton {
-  position: relative;
+  position: absolute;
   color: black;
-  font-size: 2vw;
+  font-size: 2.5vw;
   font-family: ubuntu;
   border: none;
   padding: 15px 15px;
@@ -188,6 +191,7 @@ p {
   text-decoration: none; /* Remove underline from the link */
   align-self: flex-end;
   transition: all 0.3s ease;
+  bottom: 0%;
 }
 
 .navButton a {
@@ -202,10 +206,10 @@ p {
 }
 
 #aboutButton {
-  bottom: -30%;
+  bottom: 9.6vw;
 }
 #resourcesButton {
-  bottom: -15%;
+  bottom: 4.8vw;
 }
 
 .sidebar-content {
@@ -308,7 +312,7 @@ p {
 .sketchfab {
   pointer-events: auto;
   height: 100%;
-  width: 140%;
+  width: 120%;
   border: 0;
 }
 

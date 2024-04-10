@@ -60,20 +60,20 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-    
-    
-    
-    
-    
 
   // Nav to bottom
-  var navButton = document.getElementById("aboutButton");
-  navButton.addEventListener("click", function () {
-    window.scrollTo({
-      top: document.body.scrollHeight, // The maximum height of the document
-      behavior: "smooth", // Optional: Adds a smooth scrolling effect
-    });
-  });
+  var scroll = new SmoothScroll('a[href*="#"]', {
+    speed: 10, // Scroll speed in milliseconds
+    speedAsDuration: true // Treat the speed as a hard duration
+});
+
+// Example of programmatically using smooth-scroll with options
+var navButton = document.getElementById("aboutButton");
+navButton.addEventListener("click", function(event) {
+    event.preventDefault(); // Prevent default anchor behavior
+    var target = document.body.scrollHeight; // Or any other target
+    scroll.animateScroll(target, null, { speed: 500, speedAsDuration: true }); // Custom speed for this particular scroll
+});
 
   // Sketchfab API Integration
   const loadSketchfab = (sceneuid, elementId) => {
