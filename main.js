@@ -60,20 +60,21 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+    
+    
+    
+    
+    
 
-    
-    
-    
-    
- // Nav to bottom
-var navButton = document.getElementById('aboutButton');
-navButton.addEventListener('click', function() {
-  window.scrollTo({
-    top: document.body.scrollHeight, // The maximum height of the document
-    behavior: 'smooth' // Optional: Adds a smooth scrolling effect
+  // Nav to bottom
+  var navButton = document.getElementById("aboutButton");
+  navButton.addEventListener("click", function () {
+    window.scrollTo({
+      top: document.body.scrollHeight, // The maximum height of the document
+      behavior: "smooth", // Optional: Adds a smooth scrolling effect
+    });
   });
-});
-    
+
   // Sketchfab API Integration
   const loadSketchfab = (sceneuid, elementId) => {
     const success = (api) => {
@@ -106,24 +107,24 @@ navButton.addEventListener('click', function() {
   document.body.appendChild(overlayBg);
 
   function showOverlay(src) {
-      overlay.src = src;
-      overlay.style.display = "block";
-      overlayBg.style.display = "block";
-      overlayBg.style.pointerEvents = "auto";
+    overlay.src = src;
+    overlay.style.display = "block";
+    overlayBg.style.display = "block";
+    overlayBg.style.pointerEvents = "auto";
   }
 
   function hideOverlay() {
-      overlay.style.display = "none";
-      overlayBg.style.display = "none";
-      overlayBg.style.pointerEvents = "none";
+    overlay.style.display = "none";
+    overlayBg.style.display = "none";
+    overlayBg.style.pointerEvents = "none";
   }
 
   // Adjust the event listeners on the images to respond to clicks
   document.querySelectorAll(".media-gallery img").forEach((img) => {
-      img.addEventListener("click", function () {
-          showOverlay(this.src);
-      });
-      // Remove mouseleave event listener as it's no longer necessary
+    img.addEventListener("click", function () {
+      showOverlay(this.src);
+    });
+    // Remove mouseleave event listener as it's no longer necessary
   });
 
   // Add a click listener to the overlay to hide it when clicked
