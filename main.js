@@ -1,119 +1,132 @@
-let pageIndex = 1; // Start with Page Center
+document.addEventListener("DOMContentLoaded", function () {
+  let pageIndex = 0; // Start with the first page visible
+  const pageContainer = document.getElementById("pageContainer");
+  const totalPages = document.querySelectorAll(".page").length;
 
-const pageContainer = document.getElementById('pageContainer');
-const pages = document.querySelectorAll('.page');
+  // Function to update the page position based on pageIndex
+  function updatePagePosition() {
+    const offset = pageIndex * 100; // Move 100vw for each page
+    pageContainer.style.transform = `translateX(-${offset}vw)`;
+  }
 
-document.addEventListener('click', onClick);
+  // Adjusting #pageUp opacity based on scroll
+  window.addEventListener("scroll", function () {
+    const fadeEffectThreshold = window.innerHeight; // Adjust threshold as needed
+    const opacity = 1 - Math.min(window.scrollY / fadeEffectThreshold, 1);
+    document.getElementById("pageUp").style.opacity = opacity;
+  });
 
-function onClick(e) {
-    const edgeThreshold = window.innerWidth / 15; // Smaller clickable area at the edges
+  document.addEventListener("click", function (e) {
+    const edgeThreshold = 100; // Pixels from the edge to detect
+    const clickX = e.clientX;
+    const viewportWidth = window.innerWidth;
 
-    console.log('Click detected at:', e.clientX, 'Window width:', window.innerWidth);
+    if (clickX < edgeThreshold && pageIndex > 0 < 2) {
+      pageIndex--;
+    } else if (
+      clickX > viewportWidth - edgeThreshold &&
+      pageIndex < totalPages - 1
+    ) {
+      pageIndex++;
+    }
+    updatePagePosition();
+    adjustVisibilityBasedOnPage(pageIndex);
+  });
 
-    if (e.clientX <= edgeThreshold && pageIndex > 1) {
-        pageIndex--;
-        console.log('Moving to left page, new pageIndex:', pageIndex);
-    } else if (e.clientX >= window.innerWidth - edgeThreshold && pageIndex < pages.length) {
-        pageIndex++;
-        console.log('Moving to right page, new pageIndex:', pageIndex);
+  function adjustVisibilityBasedOnPage(currentPageIndex) {
+    const pageLeft = document.getElementById("pageLeft");
+    const pageRight = document.getElementById("pageRight");
+    // Select absolutely positioned elements specifically, if they can be identified by a class
+    const absElementsInPageLeft = pageLeft.querySelectorAll(".abs-element");
+
+    if (currentPageIndex === 1) {
+      // Assuming pageIndex 1 corresponds to #pageRight
+      pageLeft.style.display = "none";
+      absElementsInPageLeft.forEach((el) => (el.style.visibility = "hidden")); // Hide absolutely positioned elements
+      pageRight.style.display = "block";
+      document.body.classList.add("no-scroll");
+    } else {
+      pageLeft.style.display = "block";
+      absElementsInPageLeft.forEach((el) => (el.style.visibility = "visible")); // Show absolutely positioned elements
+      document.body.classList.remove("no-scroll");
     }
 
-    updatePages();
-}
+    // Optionally adjust visibility for other pages
+    otherPages.forEach((page) => {
+      if (currentPageIndex !== Array.from(otherPages).indexOf(page)) {
+        page.style.display = "none";
+      } else {
+        page.style.display = "block";
+      }
+    });
+  }
 
-function updatePages() {
-    const transformValue = `translateX(-${(pageIndex - 1) * 33.33}%)`;
-    console.log('Updating pages with transform:', transformValue);
-
-    pageContainer.style.transform = transformValue;
-}
-
-
-
-const success = (api) => {
-    // api.start will start loading the 3D model
-    api.start(() => console.log("Sketchfab scene starts loading"));
-    api.addEventListener("viewerready", () => console.log("Sketchfab scene is ready"))
-  };
+    
+    
+    
+    
+ // Nav to bottom
+var navButton = document.getElementById('aboutButton');
+navButton.addEventListener('click', function() {
+  window.scrollTo({
+    top: document.body.scrollHeight, // The maximum height of the document
+    behavior: 'smooth' // Optional: Adds a smooth scrolling effect
+  });
+});
+    
+  // Sketchfab API Integration
   const loadSketchfab = (sceneuid, elementId) => {
-    // To get started with Sketchfab, we need to create a client
-    // object for a certain iframe in the DOM
+    const success = (api) => {
+      api.start(() => console.log("Sketchfab scene starts loading"));
+      api.addEventListener("viewerready", () =>
+        console.log("Sketchfab scene is ready")
+      );
+    };
+
     const iframe = document.getElementById(elementId);
     const client = new Sketchfab("1.12.1", iframe);
-  
-    // Then we can initialize the client with a specific model
-    // and some player parameters
+
     client.init(sceneuid, {
       success: success,
       error: () => console.error("Sketchfab API error"),
       ui_stop: 0,
       preload: 1,
-      camera: 0
+      camera: 0,
     });
   };
-  document.addEventListener('DOMContentLoaded', function() {
-    loadSketchfab("7c4122660e514aa1b590f4691c33d9ac", "api-frame");
+
+  loadSketchfab("823f7f95ba5145e18b052c5e95097dbd", "api-frame");
+
+  const overlay = document.createElement("img");
+  overlay.id = "image-overlay";
+  document.body.appendChild(overlay);
+
+  const overlayBg = document.createElement("div");
+  overlayBg.id = "overlay-background";
+  document.body.appendChild(overlayBg);
+
+  function showOverlay(src) {
+      overlay.src = src;
+      overlay.style.display = "block";
+      overlayBg.style.display = "block";
+      overlayBg.style.pointerEvents = "auto";
+  }
+
+  function hideOverlay() {
+      overlay.style.display = "none";
+      overlayBg.style.display = "none";
+      overlayBg.style.pointerEvents = "none";
+  }
+
+  // Adjust the event listeners on the images to respond to clicks
+  document.querySelectorAll(".media-gallery img").forEach((img) => {
+      img.addEventListener("click", function () {
+          showOverlay(this.src);
+      });
+      // Remove mouseleave event listener as it's no longer necessary
   });
 
-  document.addEventListener('DOMContentLoaded', function() {
-    // Create the overlay element and append it to the body
-    const overlay = document.createElement('img');
-    overlay.id = 'image-overlay';
-    document.body.appendChild(overlay);
-  
-    // Function to show the overlay
-    function showOverlay(src) {
-      overlay.src = src;
-      overlay.style.display = 'block'; // Show the overlay
-    }
-  
-    // Function to hide the overlay
-    function hideOverlay() {
-      overlay.style.display = 'none'; // Hide the overlay
-    }
-  
-    // Add hover event listeners to all images within the media gallery
-    document.querySelectorAll('.media-gallery img').forEach(img => {
-      img.addEventListener('mouseenter', function() {
-        showOverlay(this.src);
-      });
-      img.addEventListener('mouseleave', hideOverlay);
-    });
-  
-    // Optionally, hide the overlay when it's clicked, allowing users to return to the content
-    overlay.addEventListener('click', hideOverlay);
-  });
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    const overlay = document.createElement('img');
-    overlay.id = 'image-overlay';
-    overlay.style.pointerEvents = 'none'; // Ignore mouse events
-    document.body.appendChild(overlay);
-  
-    const overlayBg = document.createElement('div');
-    overlayBg.id = 'overlay-background';
-    overlayBg.style.pointerEvents = 'none'; // Allow clicks to pass through
-    document.body.appendChild(overlayBg);
-  
-    // No need for debounce here, directly show/hide overlay
-    function showOverlay(src) {
-      overlay.src = src;
-      overlay.style.display = 'block';
-      overlayBg.style.display = 'block';
-    }
-  
-    function hideOverlay() {
-      overlay.style.display = 'none';
-      overlayBg.style.display = 'none';
-    }
-  
-    document.querySelectorAll('.media-gallery img').forEach(img => {
-      img.addEventListener('mouseenter', function() {
-        showOverlay(this.src);
-      });
-      img.addEventListener('mouseleave', hideOverlay);
-    });
-  
-    // Since pointer events are ignored, no need to attach click events to hide
-  });
-  
+  // Add a click listener to the overlay to hide it when clicked
+  overlay.addEventListener("click", hideOverlay);
+  overlayBg.addEventListener("click", hideOverlay);
+});

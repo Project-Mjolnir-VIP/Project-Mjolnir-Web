@@ -13,13 +13,37 @@
 
 	<body>
     <div class="page-container" id="pageContainer">
+      <div class="vertical-sections">
+      <div class="page" id="pageUp">
+        <div class="sidebar top-sidebar"> 
+          <img class="LOGO" src="Mjolnir.PNG" >
+          <h1>OPEN SOURCE ADAPTIVE MTB</h1>
+          <button id="aboutButton" class="navButton">About</button>
+          <button id="resourcesButton" class="navButton">Resources</button>
+          <button id="communityButton" class="navButton">Community</button>
+
+
+
+        </div>
+        <div class="video-container">
+          <video autoplay loop muted id="backgroundVideo">
+              <source src="promo.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+      </div>
+      </div>
+
       <div class="page" id="pageLeft">
         <div id="threeContainer"></div> 
           <div class="sidebar">
-            <img class="LOGO" src="Mjolnir.PNG" >
               <div class="sidebar-content">
               <div class="description">  
-                <p>An adaptive mountain bike for wheelchair users </p>
+                <h2>About</h2>
+                <h2>Project Mjolnir </h2>
+                <p>is an open source adaptive mountain bike project created for wheelchair users. </p>
+                <p>The frame concept is based on a modular platform that enables builders to construct and develop their own adaptive MTB cost-effectively. </p>
+                <p>As the components can be made by any capable machine shop or via online rapid prototyping outlets most parts can be manufactured and delivered almost anywhere in the world. Individuals can customize any element of the frame to suit their specific requirements. This project is being developed as part of NYU Tandon's VIP program.
+                </p>
               </div>
                   <div class="media-gallery">
                     <img src="/Media/T1.jpeg">
@@ -42,29 +66,30 @@
           <div class="api-container">
             <iframe class="sketchfab" id="api-frame" allow="autoplay; fullscreen" sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-popups allow-forms"></iframe></div>
 
-          <div class="arrow-container-right">
-            <div class="arrow-right">&#8594;</div>
+          <div class="notice-container">
+            <div class="notice">
+              <p>Resources</p>
+            </div>
           </div>
+      </div>
       </div>
 
       <div class="page" id="pageRight">
           <div class="sidebar">
               <div class="Resources">
                   <h1>Resources</h1>
-                  <p>Here's all the 3D and instructional resources to help you build our bike step by step.</p>
-                  <!-- <p>Here is an evergrowing database that helps you to do just that.</p> -->
+                  <p>Download the CAD files you can use to get parts made and find instructions on how to assemble your own Project Mjolnir AMTB hand cycle.</p>
               </div>
+              <div class="arrow-container-left">
+                <div class="arrow-left">&#8592;</div>
+                </div>
           </div>
           <div class="manual-gallery">
-            <img src="/Manual/1.jpg">
-            <img src="/Manual/2.PNG">
-            <img src="/Manual/3.webp">
+            <img src="/Manual/Rear Frame.png">
+            <img src="/Manual/Rigid Front Fork.png">
         </div>
+        
       </div>
-
-          <div class="arrow-container-left">
-            <div class="arrow-left">&#8592;</div>
-            </div>
       </div>
   </div>
 

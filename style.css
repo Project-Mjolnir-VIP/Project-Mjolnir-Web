@@ -4,17 +4,25 @@ body {
   font-family: ubuntu;
   color: black;
 }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+body::-webkit-scrollbar {
+  display: none;
+}
+
 h1 {
   padding: 0%;
   font-size: 3vw;
   text-align: left;
-  line-height: 40%;
 }
 h2 {
   margin: 0;
-  font-size: 3.5vw;
+  font-size: 2vw;
   text-align: left;
-  line-height: 30%;
 }
 p {
   font-size: 1.4vw;
@@ -24,25 +32,66 @@ p {
 
 .page-container {
   display: flex;
-  width: 300%; /* Three pages, 100% each */
-  transition: transform 0.3s ease;
+  flex-direction: row;
+  min-width: 200vw; /* Allocate space for the side-by-side layout */
+}
+
+.vertical-sections {
+  width: 100vw;
+  overflow-y: auto; /* Allow vertical scrolling within this container */
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
 .page {
-  width: 33.33%; /* One-third of the container width */
-  height: 100vh;
-  background-color: white;
+  width: 100vw; /* Each page takes up 100% of the viewport width */
+  flex: 0 0 100vw; /* Do not grow or shrink, and be 100vw wide */
+  height: 100vh; /* Adjust the height as needed */
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   position: relative;
+  overflow-x: hidden;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+#pageUp {
+  position: relative; /* Ensure positioning context for the video container */
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Prevent any overflow from the video */
+  z-index: 2;
+}
+
+.video-container {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#backgroundVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  object-fit: cover; /* Cover the container without losing aspect ratio */
+  z-index: -1; /* Keep the video in the background */
+}
+
+.additional-content {
+  padding: 20px; /* Add padding for readability */
+  color: #ffffff; /* Adjust text color as needed */
+  background-color: #000; /* Optional background color for contrast */
+  /* More styling as needed */
 }
 
 #threeContainer {
   width: 100vw; /* Full width of the page section */
   height: 100vh; /* Full height, or adjust as needed */
-  position: absolute;
+  position: fixed;
   padding-left: 15%;
   padding-bottom: 0%;
   top: 0;
@@ -59,6 +108,39 @@ p {
   justify-content: space-between;
   position: relative;
   background-color: white;
+  z-index: 1;
+}
+
+.no-scroll {
+  overflow-y: hidden;
+  height: 100vh;
+}
+
+#pageLeft {
+  position: relative;
+  overflow: hidden;
+}
+
+#pageRight {
+  width: 100vw;
+  height: 100vh; /* Ensure #pageRight does not extend beyond the viewport height */
+  overflow-y: auto; /* Allows for scrolling within #pageRight if the content exceeds the viewport height. Change to 'hidden' if you want to cut off overflow content */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center children horizontally */
+  justify-content: start; /* Align children to the start of the flex-direction */
+}
+
+.top-sidebar {
+  position: absolute;
+  top: 0;
+  width: 24%; /* Adjust based on your layout */
+  background-color: whitesmoke; /* Example semi-transparent white */
+  z-index: 3; /* Ensure it's above the video */
+  /* Other styling as needed, similar to other sidebars */
+  opacity: 0.8; /* Make them half transparent */
+  transform: translateX(15%); /* Move to the right by 10% of their own width */
+  transition: transform 0.5s ease; 
 }
 
 .sidebar {
@@ -74,14 +156,56 @@ p {
   justify-content: space-between;
   padding: 0%;
   height: 100vh;
+  background-color: rgba(255, 255, 255, 0.8);  transform: translateX(15%); /* Move to the right by 10% of their own width */
+  transition: transform 0.5s ease; 
 }
 
 .LOGO {
   width: 68%;
   position: relative;
-  padding-left: 15%;
-  padding-top: 0;
-  padding-bottom: 5%;
+  padding-left: 16%;
+  padding-top: 2%;
+}
+
+.top-sidebar h1 {
+  position: inherit;
+  padding: 5%;
+  text-align: center;
+  top: 32%;
+}
+
+.navButton {
+  position: relative;
+  color: black;
+  font-size: 2vw;
+  font-family: ubuntu;
+  border: none;
+  padding: 15px 15px;
+  z-index: 11;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  text-decoration: none; /* Remove underline from the link */
+  align-self: flex-end;
+  transition: all 0.3s ease;
+}
+
+.navButton a {
+  color: inherit; /* Inherit text color */
+  text-decoration: none; /* Remove underline from the link */
+}
+
+.navButton:hover {
+  background-color: silver;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow on hover */
+}
+
+#aboutButton {
+  bottom: -30%;
+}
+#resourcesButton {
+  bottom: -15%;
 }
 
 .sidebar-content {
@@ -99,19 +223,20 @@ p {
 
 .description {
   padding: 10%;
-  padding-top: 0%;
+  padding-top: 10%;
   margin-top: 0%;
 }
 
 .description p {
-  font-size: 1.5vw;
+  padding: 0%;
 }
 
 .media-gallery {
   display: flex;
   position: relative;
   flex-direction: column; /* Stacks images vertically */
-  padding-right: 2%;
+  padding-right: 5%;
+  z-index: 999;
 }
 
 .media-gallery img {
@@ -153,7 +278,7 @@ p {
   padding: 15px 15px;
   z-index: 11;
   cursor: pointer;
-  width: 95%;
+  width: 100%;
   text-align: center;
   text-decoration: none; /* Remove underline from the link */
   align-self: flex-end;
@@ -173,46 +298,62 @@ p {
 
 .api-container {
   pointer-events: auto;
-  position: absolute;
+  position: fixed;
   z-index: 10;
-  padding-left: 22%;
   /* padding-right: 10%; */
   height: 100vh;
-  width: 74%;
+  width: 48%;
+  overflow-x: hidden;
 }
 .sketchfab {
   pointer-events: auto;
   height: 100%;
-  width: 100%;
+  width: 140%;
   border: 0;
 }
 
-.arrow-container-left,
-.arrow-container-right {
-  position: fixed;
+.api-container::-webkit-scrollbar {
+  display: none;
+}
+
+.notice {
+  position: relative;
+  padding-top: 1%;
+  right: 0;
+  padding-left: 96vw;
+  color: black;
+  animation: blink-animation 2s infinite;
+  z-index: 20;
+}
+.notice p {
+  font-size: 2.5vw;
+  transform: rotate(90deg);
+}
+.notice-container {
+  background-color: whitesmoke;
+  position: relative;
+  height: 100vh;
   top: 50%;
   transform: translateY(-50%);
   z-index: 3;
   pointer-events: none;
+  animation: blink-animation 2s infinite;
 }
 
 .arrow-left {
-  left: 0;
-  padding-right: 98vw;
-  font-size: 3vw;
+  left: 80px;
+  padding-right: 0;
+  font-size: 4vw;
   color: black;
-  animation: blink-animation 1s infinite;
+  animation: blink-animation 2s infinite;
   z-index: 20;
 }
-
-.arrow-right {
-  position: static;
-  right: 0;
-  padding-left: 98vw;
-  font-size: 3vw;
-  color: black;
-  animation: blink-animation 1s infinite;
-  z-index: 20;
+.arrow-container-left {
+  position: fixed;
+  top: 96%;
+  transform: translateY(-50%);
+  z-index: 3;
+  pointer-events: none;
 }
 
 /* Blinking Animation */
@@ -230,11 +371,19 @@ p {
   display: flex;
   flex-direction: column; /* Stacks images vertically */
   overflow-y: auto;
+  right: 0%;
+  padding-left: 25%;
   height: 100%;
 }
 
 .manual-gallery img {
+  right: 0%;
+  padding-left: 30;
   width: 100%;
   height: auto;
   object-fit: cover;
+}
+
+.manual-gallery::-webkit-scrollbar {
+  display: none;
 }
