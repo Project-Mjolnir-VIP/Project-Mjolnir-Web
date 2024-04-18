@@ -24,6 +24,13 @@ h2 {
   font-size: 2vw;
   text-align: left;
 }
+h3 {
+  font-size: 1.6vw;
+  text-align: left;
+  padding: 0%;
+  margin: 0%;
+}
+
 p {
   font-size: 1.4vw;
   padding-top: 8%;
@@ -138,7 +145,7 @@ p {
   background-color: whitesmoke; /* Example semi-transparent white */
   z-index: 3; /* Ensure it's above the video */
   /* Other styling as needed, similar to other sidebars */
-  opacity: 0.8; /* Make them half transparent */
+  background-color: rgba(255, 255, 255, 0.1);
   transform: translateX(15%); /* Move to the right by 10% of their own width */
   transition: transform 0.5s ease;
 }
@@ -156,15 +163,15 @@ p {
   justify-content: space-between;
   padding: 0%;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.5);
   transform: translateX(15%); /* Move to the right by 10% of their own width */
   transition: transform 0.5s ease;
 }
 
 .LOGO {
-  width: 18vw;
+  width: 19vw;
   position: absolute;
-  padding-left: 12%;
+  padding-left: 10%;
   padding-top: 2%;
   padding-bottom: 0%;
 }
@@ -180,10 +187,11 @@ p {
 .navButton {
   position: absolute;
   color: black;
-  font-size: 2.5vw;
+  font-size: 2vw;
   font-family: ubuntu;
   border: none;
   padding: 15px 15px;
+  padding: 5%;
   z-index: 11;
   cursor: pointer;
   width: 100%;
@@ -192,6 +200,7 @@ p {
   align-self: flex-end;
   transition: all 0.3s ease;
   bottom: 0%;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .navButton a {
@@ -200,7 +209,7 @@ p {
 }
 
 .navButton:hover {
-  background-color: silver;
+  background-color: white;
   transform: scale(1.05);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow on hover */
 }
@@ -368,21 +377,73 @@ p {
 }
 
 .Resources {
-  padding: 5%;
+  padding: 0;
+  left: 0;
+}
+
+.Resources p {
+  margin: 0;
+  padding: 0;
+}
+
+.Resources h2 {
+  padding-top: 10%;
+  padding-bottom: 5%;
+}
+
+.download {
+  position: relative;
+  color: white;
+  font-size: 1.5vw;
+  font-family: ubuntu;
+  border: none;
+  padding: 2%;
+  z-index: 11;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  text-decoration: none; /* Remove underline from the link */
+  transition: all 0.3s ease;
+  background-color: orangered;
+}
+
+.download a {
+  color: inherit; /* Inherit text color */
+  text-decoration: none; /* Remove underline from the link */
+}
+
+.download:hover {
+  background-color: rgb(190, 51, 0);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow on hover */
+}
+
+#FSButton {
+  margin-bottom: 10%;
 }
 
 .manual-gallery {
-  display: flex;
+  /* display: flex; */
   flex-direction: column; /* Stacks images vertically */
   overflow-y: auto;
   right: 0%;
-  padding-left: 25%;
-  height: 100%;
+  padding-left: 28%;
+  height: 100vh;
+}
+
+.manual-gallery iframe {
+  position: relative;
+  width: 100%;
+  right: 0%;
+  object-fit: cover;
+  border: 0;
+  overflow-y: hidden;
+  padding-left: 5%;
 }
 
 .manual-gallery img {
+  position: relative;
   right: 0%;
-  padding-left: 30;
   width: 100%;
   height: auto;
   object-fit: cover;
