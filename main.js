@@ -1,79 +1,31 @@
 document.addEventListener("DOMContentLoaded", function () {
-  let pageIndex = 0; // Start with the first page visible
-  const pageContainer = document.getElementById("pageContainer");
-  const totalPages = document.querySelectorAll(".page").length;
 
-  // Function to update the page position based on pageIndex
-  function updatePagePosition() {
-    const offset = pageIndex * 100; // Move 100vw for each page
-    pageContainer.style.transform = `translateX(-${offset}vw)`;
-  }
 
-  // Adjusting #pageUp opacity based on scroll
+
+
+
+
+
+
   window.addEventListener("scroll", function () {
     const fadeEffectThreshold = window.innerHeight; // Adjust threshold as needed
     const opacity = 1 - Math.min(window.scrollY / fadeEffectThreshold, 1);
     document.getElementById("pageUp").style.opacity = opacity;
   });
 
-  document.addEventListener("click", function (e) {
-    const edgeThreshold = 100; // Pixels from the edge to detect
-    const clickX = e.clientX;
-    const viewportWidth = window.innerWidth;
-
-    if (clickX < edgeThreshold && pageIndex > 0 < 2) {
-      pageIndex--;
-    } else if (
-      clickX > viewportWidth - edgeThreshold &&
-      pageIndex < totalPages - 1
-    ) {
-      pageIndex++;
-    }
-    updatePagePosition();
-    adjustVisibilityBasedOnPage(pageIndex);
-  });
-
-  function adjustVisibilityBasedOnPage(currentPageIndex) {
-    const pageLeft = document.getElementById("pageLeft");
-    const pageRight = document.getElementById("pageRight");
-    // Select absolutely positioned elements specifically, if they can be identified by a class
-    const absElementsInPageLeft = pageLeft.querySelectorAll(".abs-element");
-
-    if (currentPageIndex === 1) {
-      // Assuming pageIndex 1 corresponds to #pageRight
-      pageLeft.style.display = "none";
-      absElementsInPageLeft.forEach((el) => (el.style.visibility = "hidden")); // Hide absolutely positioned elements
-      pageRight.style.display = "block";
-      document.body.classList.add("no-scroll");
-    } else {
-      pageLeft.style.display = "block";
-      absElementsInPageLeft.forEach((el) => (el.style.visibility = "visible")); // Show absolutely positioned elements
-      document.body.classList.remove("no-scroll");
-    }
-
-    // Optionally adjust visibility for other pages
-    otherPages.forEach((page) => {
-      if (currentPageIndex !== Array.from(otherPages).indexOf(page)) {
-        page.style.display = "none";
-      } else {
-        page.style.display = "block";
-      }
-    });
-  }
-
   // Nav to bottom
   var scroll = new SmoothScroll('a[href*="#"]', {
     speed: 10, // Scroll speed in milliseconds
-    speedAsDuration: true // Treat the speed as a hard duration
-});
+    speedAsDuration: true, // Treat the speed as a hard duration
+  });
 
-// Example of programmatically using smooth-scroll with options
-var navButton = document.getElementById("aboutButton");
-navButton.addEventListener("click", function(event) {
+  // Example of programmatically using smooth-scroll with options
+  var navButton = document.getElementById("aboutButton");
+  navButton.addEventListener("click", function (event) {
     event.preventDefault(); // Prevent default anchor behavior
     var target = document.body.scrollHeight; // Or any other target
     scroll.animateScroll(target, null, { speed: 500, speedAsDuration: true }); // Custom speed for this particular scroll
-});
+  });
 
   // Sketchfab API Integration
   const loadSketchfab = (sceneuid, elementId) => {

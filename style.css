@@ -219,6 +219,7 @@ p {
 }
 #resourcesButton {
   bottom: 4.8vw;
+  left: 0;
 }
 
 .sidebar-content {
@@ -311,17 +312,17 @@ p {
 
 .api-container {
   pointer-events: auto;
-  position: fixed;
+  position: absolute;
   z-index: 10;
   /* padding-right: 10%; */
   height: 100vh;
-  width: 48%;
+  width: 100%;
   overflow-x: hidden;
 }
 .sketchfab {
   pointer-events: auto;
   height: 100%;
-  width: 120%;
+  width: 100%;
   border: 0;
 }
 
@@ -353,102 +354,9 @@ p {
   animation: blink-animation 2s infinite;
 }
 
-.arrow-left {
-  left: 80px;
-  padding-right: 0;
-  font-size: 4vw;
-  color: black;
-  animation: blink-animation 2s infinite;
-  z-index: 20;
-}
-.arrow-container-left {
-  position: fixed;
-  top: 96%;
-  transform: translateY(-50%);
-  z-index: 3;
-  pointer-events: none;
-}
-
 /* Blinking Animation */
 @keyframes blink-animation {
   50% {
     opacity: 0;
   }
-}
-
-.Resources {
-  padding: 0;
-  left: 0;
-}
-
-.Resources p {
-  margin: 0;
-  padding: 0;
-}
-
-.Resources h2 {
-  padding-top: 10%;
-  padding-bottom: 5%;
-}
-
-.download {
-  position: relative;
-  color: white;
-  font-size: 1.5vw;
-  font-family: ubuntu;
-  border: none;
-  padding: 2%;
-  z-index: 11;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
-  text-decoration: none; /* Remove underline from the link */
-  transition: all 0.3s ease;
-  background-color: orangered;
-}
-
-.download a {
-  color: inherit; /* Inherit text color */
-  text-decoration: none; /* Remove underline from the link */
-}
-
-.download:hover {
-  background-color: rgb(190, 51, 0);
-  transform: scale(1.05);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow on hover */
-}
-
-#FSButton {
-  margin-bottom: 10%;
-}
-
-.manual-gallery {
-  /* display: flex; */
-  flex-direction: column; /* Stacks images vertically */
-  overflow-y: auto;
-  right: 0%;
-  padding-left: 28%;
-  height: 100vh;
-}
-
-.manual-gallery iframe {
-  position: relative;
-  width: 100%;
-  right: 0%;
-  object-fit: cover;
-  border: 0;
-  overflow-y: hidden;
-  padding-left: 5%;
-}
-
-.manual-gallery img {
-  position: relative;
-  right: 0%;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-.manual-gallery::-webkit-scrollbar {
-  display: none;
 }

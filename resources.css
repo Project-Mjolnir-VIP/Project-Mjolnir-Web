@@ -1,0 +1,209 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: ubuntu;
+  color: black;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+body::-webkit-scrollbar {
+  display: none;
+}
+
+h1 {
+  padding: 0%;
+  font-size: 3vw;
+  text-align: left;
+}
+h2 {
+  margin: 0;
+  font-size: 2vw;
+  text-align: left;
+}
+h3 {
+  font-size: 1.6vw;
+  text-align: left;
+  padding: 0%;
+  margin: 0%;
+}
+
+p {
+  font-size: 1.4vw;
+  padding-top: 8%;
+  text-align: left;
+}
+
+#pageRight {
+  width: 100vw; /* Each page takes up 100% of the viewport width */
+  flex: 0 0 100vw; /* Do not grow or shrink, and be 100vw wide */
+  height: 100vh; /* Adjust the height as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow-x: hidden;
+  transition: visibility 0s, opacity 0.5s linear;
+  padding: 0%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  background-color: white;
+  z-index: 1;
+}
+
+.no-scroll {
+  overflow-y: hidden;
+  height: 100vh;
+}
+
+#pageLeft {
+  position: relative;
+  overflow: hidden;
+}
+
+#pageRight {
+  width: 100vw;
+  height: 100vh; /* Ensure #pageRight does not extend beyond the viewport height */
+  overflow-y: auto; /* Allows for scrolling within #pageRight if the content exceeds the viewport height. Change to 'hidden' if you want to cut off overflow content */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center children horizontally */
+  justify-content: start; /* Align children to the start of the flex-direction */
+}
+
+
+.sidebar {
+  width: 24%;
+  background-color: whitesmoke;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0%;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: translateX(15%); /* Move to the right by 10% of their own width */
+  transition: transform 0.5s ease;
+  overflow-y: auto;
+}
+
+.Resources {
+  padding: 0;
+  left: 0;
+  
+}
+
+.Resources p {
+  margin: 0;
+  padding: 0;
+}
+
+.Resources h2 {
+  padding-top: 10%;
+  padding-bottom: 5%;
+}
+
+.download {
+  position: relative;
+  color: white;
+  font-size: 1.5vw;
+  font-family: ubuntu;
+  border: none;
+  padding: 2%;
+  z-index: 11;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  text-decoration: none; /* Remove underline from the link */
+  transition: all 0.3s ease;
+  background-color: orangered;
+}
+
+.download a {
+  color: inherit; /* Inherit text color */
+  text-decoration: none; /* Remove underline from the link */
+}
+
+.download:hover {
+  background-color: rgb(190, 51, 0);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+#FSButton {
+  margin-bottom: 10%;
+}
+
+/* .arrow-left {
+  left: 80px;
+  padding-right: 0;
+  font-size: 4vw;
+  color: black;
+  animation: blink-animation 2s infinite;
+  z-index: 20;
+}
+.arrow-container-left {
+  position: fixed;
+  top: 96%;
+  transform: translateY(-50%);
+  z-index: 3;
+  pointer-events: none;
+} */
+
+/* Blinking Animation */
+@keyframes blink-animation {
+  50% {
+    opacity: 0;
+  }
+}
+
+.manual-gallery {
+/* display: flex;
+flex-direction: column;
+justify-content:flex-end; */
+  padding-left: 25%;
+  width: 74.5%;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.manual-gallery iframe {
+  position: relative;
+  width: 95%;
+  height: 60%;
+  right: 0%;
+  object-fit: cover;
+  border: 0;
+  padding-left: 5%;
+}
+
+.manual-gallery img {
+  position: relative;
+  right: 0%;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+
+#pageRight::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.manual-gallery::-webkit-scrollbar {
+  display: none;
+}
