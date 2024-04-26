@@ -362,7 +362,7 @@ p {
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 1000px) {
 
   #backgroundVideo {
     height: 30vh; /* 将视频高度设置为视口高度的50% */
@@ -387,7 +387,7 @@ p {
 
   .top-sidebar, .sidebar {
     width: 30%; /* 侧边栏宽度调整为100% */
-    height: 18vh;
+    height: 22vh;
     transform: translateX(0); /* 移除水平位移 */
     padding: 2%; /* 减少内边距 */
   }
@@ -415,7 +415,8 @@ p {
   visibility: hidden;
   }
   #resourcesButton {
-    bottom:0;
+  position: relative;
+  bottom:0;
   }
   #communityButton{
   visibility: hidden;
@@ -437,7 +438,7 @@ p {
 
   .sketchfab {
     width: 100vw; /* 设置宽度为视口宽度的100% */
-    height: 30vh; /* 设置高度为视口高度的30% */
+    height: 47%; /* 设置高度为视口高度的30% */
   }
   .media-gallery img {
     width: 90%; /* 图片宽度调整为90% */

@@ -207,3 +207,28 @@ justify-content:flex-end; */
 .manual-gallery::-webkit-scrollbar {
   display: none;
 }
+
+@media (max-width: 720px) {
+  .sidebar{
+    position: relative;
+    width:100%;
+  }
+  .Resources{
+    padding-right: 30%;
+  }
+
+  .download{
+    font-size: 4vw;
+  }
+
+  h1, h2, h3, p {
+    font-size: 3.5vw; /* 增加字体大小以提高可读性 */
+  }
+
+  .manual-gallery{
+    width: 100%;
+    padding: 0%;
+    margin: 0%;
+  }
+
+}
