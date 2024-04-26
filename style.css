@@ -362,7 +362,7 @@ p {
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1080px) {
 
   #backgroundVideo {
     height: 30vh; /* 将视频高度设置为视口高度的50% */
