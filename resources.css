@@ -212,6 +212,7 @@ justify-content:flex-end; */
   .sidebar{
     position: relative;
     width:100%;
+    overflow-y: visible;
   }
   .Resources{
     padding-right: 30%;
@@ -226,9 +227,20 @@ justify-content:flex-end; */
   }
 
   .manual-gallery{
+    padding-top: 80%;
     width: 100%;
+    left: 0;
     padding: 0%;
     margin: 0%;
+    overflow-y: visible;
+
+  }
+
+  .manual-gallery iframe {
+    position: relative;
+    left: 0;
+    width: 95%;
+    height: 100%;
   }
 
 }
