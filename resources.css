@@ -4,12 +4,14 @@ body {
   font-family: ubuntu;
   color: black;
 }
+
 html,
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden;
 }
+
 body::-webkit-scrollbar {
   display: none;
 }
@@ -19,11 +21,13 @@ h1 {
   font-size: 3vw;
   text-align: left;
 }
+
 h2 {
   margin: 0;
   font-size: 2vw;
   text-align: left;
 }
+
 h3 {
   font-size: 1.6vw;
   text-align: left;
@@ -38,49 +42,21 @@ p {
 }
 
 #pageRight {
-  width: 100vw; /* Each page takes up 100% of the viewport width */
-  flex: 0 0 100vw; /* Do not grow or shrink, and be 100vw wide */
-  height: 100vh; /* Adjust the height as needed */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  overflow-x: hidden;
-  transition: visibility 0s, opacity 0.5s linear;
-  padding: 0%;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: start;
   position: relative;
   background-color: white;
   z-index: 1;
+  transition: visibility 0s, opacity 0.5s linear;
 }
-
-.no-scroll {
-  overflow-y: hidden;
-  height: 100vh;
-}
-
-#pageLeft {
-  position: relative;
-  overflow: hidden;
-}
-
-#pageRight {
-  width: 100vw;
-  height: 100vh; /* Ensure #pageRight does not extend beyond the viewport height */
-  overflow-y: auto; /* Allows for scrolling within #pageRight if the content exceeds the viewport height. Change to 'hidden' if you want to cut off overflow content */
-  display: flex;
-  flex-direction: column; /* Stack children vertically */
-  align-items: center; /* Center children horizontally */
-  justify-content: start; /* Align children to the start of the flex-direction */
-}
-
 
 .sidebar {
   width: 24%;
-  background-color: whitesmoke;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -92,7 +68,7 @@ p {
   padding: 0%;
   height: 100vh;
   background-color: rgba(255, 255, 255, 0.5);
-  transform: translateX(15%); /* Move to the right by 10% of their own width */
+  transform: translateX(15%);
   transition: transform 0.5s ease;
   overflow-y: auto;
 }
@@ -100,7 +76,6 @@ p {
 .Resources {
   padding: 0;
   left: 0;
-  
 }
 
 .Resources p {
@@ -124,14 +99,14 @@ p {
   cursor: pointer;
   width: 100%;
   text-align: left;
-  text-decoration: none; /* Remove underline from the link */
+  text-decoration: none;
   transition: all 0.3s ease;
   background-color: orangered;
 }
 
 .download a {
-  color: inherit; /* Inherit text color */
-  text-decoration: none; /* Remove underline from the link */
+  color: inherit;
+  text-decoration: none;
 }
 
 .download:hover {
@@ -144,33 +119,7 @@ p {
   margin-bottom: 10%;
 }
 
-/* .arrow-left {
-  left: 80px;
-  padding-right: 0;
-  font-size: 4vw;
-  color: black;
-  animation: blink-animation 2s infinite;
-  z-index: 20;
-}
-.arrow-container-left {
-  position: fixed;
-  top: 96%;
-  transform: translateY(-50%);
-  z-index: 3;
-  pointer-events: none;
-} */
-
-/* Blinking Animation */
-@keyframes blink-animation {
-  50% {
-    opacity: 0;
-  }
-}
-
 .manual-gallery {
-/* display: flex;
-flex-direction: column;
-justify-content:flex-end; */
   padding-left: 25%;
   width: 74.5%;
   height: 100vh;
@@ -195,52 +144,9 @@ justify-content:flex-end; */
   object-fit: cover;
 }
 
-
-#pageRight::-webkit-scrollbar {
-  display: none;
-}
-
-.sidebar::-webkit-scrollbar {
-  display: none;
-}
-
+/* 隐藏所有滚动条 */
+#pageRight::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar,
 .manual-gallery::-webkit-scrollbar {
   display: none;
-}
-
-@media (max-width: 1080px) {
-  .sidebar{
-    position: relative;
-    width:100%;
-    overflow-y: visible;
-  }
-  .Resources{
-    padding-right: 30%;
-  }
-
-  .download{
-    font-size: 4vw;
-  }
-
-  h1, h2, h3, p {
-    font-size: 3.5vw; /* 增加字体大小以提高可读性 */
-  }
-
-  .manual-gallery{
-    padding-top: 80%;
-    width: 100%;
-    left: 0;
-    padding: 0%;
-    margin: 0%;
-    overflow-y: visible;
-
-  }
-
-  .manual-gallery iframe {
-    position: relative;
-    left: 0;
-    width: 95%;
-    height: 100%;
-  }
-
 }
