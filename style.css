@@ -1,8 +1,13 @@
 body {
   margin: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   font-family: ubuntu;
   color: black;
+  scroll-snap-type: y mandatory;
+  height: 100vh;
+  scroll-behavior: smooth;
+  will-change: scroll-position;
 }
 html,
 body {
@@ -16,58 +21,70 @@ body::-webkit-scrollbar {
 
 h1 {
   padding: 0%;
-  font-size: 3vw;
+  font-size: 24pt;
   text-align: left;
 }
 h2 {
   margin: 0;
-  font-size: 2vw;
+  font-size: 18pt;
   text-align: left;
 }
 h3 {
-  font-size: 1.6vw;
+  font-size: 14pt;
   text-align: left;
   padding: 0%;
   margin: 0%;
 }
 
 p {
-  font-size: 1.4vw;
+  font-size: 12pt;
   padding-top: 8%;
   text-align: left;
 }
 
 .page-container {
-  display: flex;
-  flex-direction: row;
-  min-width: 200vw; /* Allocate space for the side-by-side layout */
+  display: block;
+  width: 100vw;
+  height: 200vh; /* Two full-height pages */
 }
 
 .vertical-sections {
   width: 100vw;
-  overflow-y: auto; /* Allow vertical scrolling within this container */
-  flex-shrink: 0; /* Prevent shrinking */
+  height: 200vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .page {
-  width: 100vw; /* Each page takes up 100% of the viewport width */
-  flex: 0 0 100vw; /* Do not grow or shrink, and be 100vw wide */
-  height: 100vh; /* Adjust the height as needed */
+  width: 100vw;
+  height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   position: relative;
   overflow-x: hidden;
-  transition: visibility 0s, opacity 0.5s linear;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  transform: translateZ(0); /* Force hardware acceleration */
+  will-change: transform;
 }
 
 #pageUp {
   position: relative; /* Ensure positioning context for the video container */
   width: 100vw;
-  height: 100vh;
+  height: 100vh; /* Full height to contain both video and gallery */
   overflow: hidden; /* Prevent any overflow from the video */
   z-index: 2;
+  flex-shrink: 0;
+}
+
+.video-section {
+  position: relative;
+  width: 100vw;
+  height: 80vh;
+  overflow: hidden;
 }
 
 .video-container {
@@ -86,6 +103,8 @@ p {
   height: 120%;
   object-fit: cover; /* Cover the container without losing aspect ratio */
   z-index: -1; /* Keep the video in the background */
+  transform: translateZ(0); /* Force hardware acceleration */
+  will-change: transform;
 }
 
 .additional-content {
@@ -99,7 +118,7 @@ p {
   width: 100vw; /* Full width of the page section */
   height: 100vh; /* Full height, or adjust as needed */
   position: fixed;
-  padding-left: 15%;
+  padding-left: 17%;
   padding-bottom: 0%;
   top: 0;
   bottom: 0;
@@ -141,7 +160,8 @@ p {
 .top-sidebar {
   position: absolute;
   top: 0;
-  width: 24%; /* Adjust based on your layout */
+  width: 16%; /* Reduced to match logo width */
+  height: 80vh; /* Match the video section height */
   background-color: whitesmoke; /* Example semi-transparent white */
   z-index: 3; /* Ensure it's above the video */
   /* Other styling as needed, similar to other sidebars */
@@ -151,7 +171,7 @@ p {
 }
 
 .sidebar {
-  width: 24%;
+  width: 16%;
   background-color: whitesmoke;
   position: absolute;
   top: 0;
@@ -168,8 +188,53 @@ p {
   transition: transform 0.5s ease;
 }
 
+.right-sidebar {
+  width: 25%;
+  background-color: whitesmoke;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: -22%; /* Hide most of it off-screen, show only 3% */
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0%;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.95);
+  transition: right 0.4s ease;
+  overflow-y: auto;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.right-sidebar:hover {
+  right: 0; /* Slide in completely on hover */
+}
+
+/* Add a small visible tab on the right edge */
+.right-sidebar::before {
+  content: "Resources";
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  background-color: rgba(255, 69, 0, 0.9);
+  color: white;
+  padding: 10px 15px;
+  font-size: 12pt;
+  font-family: ubuntu;
+  border-radius: 5px 5px 0 0;
+  cursor: pointer;
+  z-index: 31;
+  transition: all 0.3s ease;
+}
+
+.right-sidebar:hover::before {
+  opacity: 0.7;
+}
+
 .LOGO {
-  width: 19vw;
+  width: 12vw;
   position: absolute;
   padding-left: 10%;
   padding-top: 2%;
@@ -179,47 +244,9 @@ p {
 .top-sidebar h1 {
   position: relative;
   padding: 5%;
-  padding-top: 22vw;
-  font-size: 2.5vw;
+  padding-top: 14vw;
+  font-size: 20pt;
   text-align: center;
-}
-
-.navButton {
-  position: absolute;
-  color: black;
-  font-size: 2vw;
-  font-family: ubuntu;
-  border: none;
-  padding: 15px 15px;
-  padding: 5%;
-  z-index: 11;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
-  text-decoration: none; /* Remove underline from the link */
-  align-self: flex-end;
-  transition: all 0.3s ease;
-  bottom: 0%;
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.navButton a {
-  color: inherit; /* Inherit text color */
-  text-decoration: none; /* Remove underline from the link */
-}
-
-.navButton:hover {
-  background-color: white;
-  transform: scale(1.05);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow on hover */
-}
-
-#aboutButton {
-  bottom: 9.6vw;
-}
-#resourcesButton {
-  bottom: 4.8vw;
-  left: 0;
 }
 
 .sidebar-content {
@@ -287,7 +314,7 @@ p {
 #sidebarButton {
   position: relative;
   color: black;
-  font-size: 25px;
+  font-size: 18pt;
   font-family: ubuntu;
   border: none;
   padding: 15px 15px;
@@ -325,6 +352,7 @@ p {
   height: 100%;
   width: 100%;
   border: 0;
+  overflow: hidden;
 }
 
 .api-container::-webkit-scrollbar {
@@ -341,7 +369,7 @@ p {
   z-index: 20;
 }
 .notice p {
-  font-size: 2.5vw;
+  font-size: 20pt;
   transform: rotate(90deg);
 }
 .notice-container {
@@ -353,6 +381,136 @@ p {
   z-index: 3;
   pointer-events: none;
   animation: blink-animation 2s infinite;
+}
+
+/* Image Gallery at bottom of first page */
+.landing-gallery {
+  width: 100vw;
+  height: 20vh;
+  background-color: rgba(245, 245, 245, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0;
+  box-sizing: border-box;
+  z-index: 4;
+  flex-shrink: 0;
+}
+
+.landing-gallery::-webkit-scrollbar {
+  height: 4px;
+}
+
+.landing-gallery::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.landing-gallery::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+}
+
+.landing-gallery img {
+  height: 20vh;
+  width: auto;
+  margin: 0;
+  border-radius: 0;
+  cursor: zoom-in;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;
+  display: block;
+  transform: translateZ(0); /* Force hardware acceleration */
+  will-change: transform;
+}
+
+.landing-gallery img:hover {
+  transform: scale(1.05) translateZ(0);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+  position: relative;
+}
+
+/* Resources styles */
+.Resources {
+  padding: 10%;
+  left: 0;
+}
+
+.Resources p {
+  margin: 0;
+  padding: 0;
+  padding-top: 8%;
+}
+
+.Resources h1 {
+  padding: 0%;
+  font-size: 24pt;
+  text-align: left;
+}
+
+.Resources h2 {
+  padding-top: 10%;
+  padding-bottom: 5%;
+  margin: 0;
+  font-size: 18pt;
+  text-align: left;
+}
+
+.Resources h3 {
+  font-size: 14pt;
+  text-align: left;
+  padding: 0%;
+  margin: 0%;
+}
+
+.download {
+  position: relative;
+  color: white;
+  font-size: 12pt;
+  font-family: ubuntu;
+  border: none;
+  padding: 2%;
+  z-index: 11;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  background-color: orangered;
+}
+
+.download a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.download:hover {
+  background-color: rgb(190, 51, 0);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#FSButton {
+  margin-bottom: 10%;
+}
+
+/* Resources iframe styling */
+.Resources iframe {
+  width: 100%;
+  border: 0;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.Resources h3 {
+  margin-top: 15px;
+  margin-bottom: 8px;
+}
+
+.right-sidebar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Blinking Animation */

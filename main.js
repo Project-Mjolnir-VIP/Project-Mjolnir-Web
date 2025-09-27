@@ -1,12 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-
-
-
-
-
-
-
   window.addEventListener("scroll", function () {
     const fadeEffectThreshold = window.innerHeight; // Adjust threshold as needed
     const opacity = 1 - Math.min(window.scrollY / fadeEffectThreshold, 1);
@@ -19,13 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     speedAsDuration: true, // Treat the speed as a hard duration
   });
 
-  // Example of programmatically using smooth-scroll with options
-  var navButton = document.getElementById("aboutButton");
-  navButton.addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent default anchor behavior
-    var target = document.body.scrollHeight; // Or any other target
-    scroll.animateScroll(target, null, { speed: 500, speedAsDuration: true }); // Custom speed for this particular scroll
-  });
+  // About button removed - navigation now handled by scroll snap system
 
   // Sketchfab API Integration
   const loadSketchfab = (sceneuid, elementId) => {
@@ -45,10 +31,213 @@ document.addEventListener("DOMContentLoaded", function () {
       ui_stop: 0,
       preload: 1,
       camera: 0,
+      scrollwheel: 0,
+      ui_infos: 0,
+      ui_inspector: 0,
+      ui_watermark: 0,
+      ui_annotations: 0,
+      ui_loading: 0,
     });
   };
 
   loadSketchfab("823f7f95ba5145e18b052c5e95097dbd", "api-frame");
+
+  // Optimized scroll handling for Sketchfab iframe
+  const apiContainer = document.querySelector(".api-container");
+  const sketchfabIframe = document.getElementById("api-frame");
+
+  if (apiContainer && sketchfabIframe) {
+    let isMouseDown = false;
+    let isDragging = false;
+    let lastInteractionTime = 0;
+    let isOverIframe = false;
+    let containerRect = null;
+    let rafId = null;
+
+    // Cache container bounds and update on resize for better performance
+    const updateContainerBounds = () => {
+      containerRect = apiContainer.getBoundingClientRect();
+    };
+    updateContainerBounds();
+    window.addEventListener("resize", updateContainerBounds);
+
+    // Optimized mouse position tracking
+    const updateMousePosition = (e) => {
+      if (!containerRect) return;
+      isOverIframe =
+        e.clientX >= containerRect.left &&
+        e.clientX <= containerRect.right &&
+        e.clientY >= containerRect.top &&
+        e.clientY <= containerRect.bottom;
+    };
+
+    // Track mouse interactions with optimized event handling
+    apiContainer.addEventListener(
+      "mousedown",
+      function (e) {
+        isMouseDown = true;
+        isDragging = false;
+        lastInteractionTime = performance.now();
+      },
+      { passive: true }
+    );
+
+    apiContainer.addEventListener(
+      "mousemove",
+      function (e) {
+        if (isMouseDown && !isDragging) {
+          isDragging = true;
+          lastInteractionTime = performance.now();
+        }
+      },
+      { passive: true }
+    );
+
+    apiContainer.addEventListener(
+      "mouseup",
+      function (e) {
+        isMouseDown = false;
+        lastInteractionTime = performance.now();
+        // Use requestAnimationFrame for smooth state transitions
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          setTimeout(() => {
+            isDragging = false;
+          }, 100);
+        });
+      },
+      { passive: true }
+    );
+
+    apiContainer.addEventListener(
+      "mouseleave",
+      function (e) {
+        isMouseDown = false;
+        isDragging = false;
+      },
+      { passive: true }
+    );
+
+    // Track mouse position globally for better iframe detection (throttled for performance)
+    let mouseMoveThrottle = null;
+    document.addEventListener(
+      "mousemove",
+      function (e) {
+        if (mouseMoveThrottle) return;
+        mouseMoveThrottle = setTimeout(() => {
+          updateMousePosition(e);
+          mouseMoveThrottle = null;
+        }, 16); // ~60fps throttling
+      },
+      {
+        passive: true,
+      }
+    );
+
+    // Let native CSS scroll snap handle page snapping for better performance
+
+    // Simplified wheel handler for iframe area only
+    const optimizedWheelHandler = function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Simple scroll handling for iframe area - let native scroll snap handle the rest
+      const deltaY = e.deltaY;
+
+      // Use requestAnimationFrame for smooth scrolling
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        window.scrollBy({
+          top: deltaY,
+          behavior: "instant",
+        });
+      });
+    };
+
+    // Container wheel event (primary handler)
+    apiContainer.addEventListener("wheel", optimizedWheelHandler, {
+      passive: false,
+      capture: true,
+    });
+
+    // Global wheel event handler with optimized iframe detection
+    document.addEventListener(
+      "wheel",
+      function (e) {
+        // Only handle wheel events when over the iframe area
+        if (isOverIframe || (e.target && apiContainer.contains(e.target))) {
+          optimizedWheelHandler(e);
+        }
+        // Let other scroll events pass through for scroll snap to work
+      },
+      {
+        passive: false,
+        capture: true,
+      }
+    );
+
+    // Optimized touch handling with better gesture detection
+    let touchStartY = 0;
+    let touchStartX = 0;
+    let isScrolling = false;
+
+    apiContainer.addEventListener(
+      "touchstart",
+      function (e) {
+        if (e.touches.length === 1) {
+          touchStartY = e.touches[0].clientY;
+          touchStartX = e.touches[0].clientX;
+          isScrolling = false;
+        } else {
+          // Multi-touch - prevent zoom gestures
+          e.preventDefault();
+        }
+      },
+      { passive: false }
+    );
+
+    apiContainer.addEventListener(
+      "touchmove",
+      function (e) {
+        if (e.touches.length === 1) {
+          const touch = e.touches[0];
+          const deltaY = Math.abs(touch.clientY - touchStartY);
+          const deltaX = Math.abs(touch.clientX - touchStartX);
+
+          // Detect if this is a scroll gesture vs model rotation
+          if (deltaY > deltaX && deltaY > 10 && !isDragging) {
+            isScrolling = true;
+            e.preventDefault();
+            // Handle touch scroll manually with accumulation for snap
+            const scrollDelta = (touch.clientY - touchStartY) * -2;
+            scrollAccumulator += scrollDelta;
+
+            window.scrollBy(0, scrollDelta * 0.3); // Reduced immediate scroll
+            touchStartY = touch.clientY;
+          }
+        } else {
+          // Prevent multi-touch gestures
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      },
+      { passive: false }
+    );
+
+    apiContainer.addEventListener(
+      "touchend",
+      function (e) {
+        if (isScrolling) {
+          // Trigger snap after touch scroll ends
+          setTimeout(() => {
+            snapToPage();
+          }, SNAP_DELAY);
+        }
+        isScrolling = false;
+      },
+      { passive: true }
+    );
+  }
 
   const overlay = document.createElement("img");
   overlay.id = "image-overlay";
@@ -72,12 +261,14 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Adjust the event listeners on the images to respond to clicks
-  document.querySelectorAll(".media-gallery img").forEach((img) => {
-    img.addEventListener("click", function () {
-      showOverlay(this.src);
+  document
+    .querySelectorAll(".media-gallery img, .landing-gallery img")
+    .forEach((img) => {
+      img.addEventListener("click", function () {
+        showOverlay(this.src);
+      });
+      // Remove mouseleave event listener as it's no longer necessary
     });
-    // Remove mouseleave event listener as it's no longer necessary
-  });
 
   // Add a click listener to the overlay to hide it when clicked
   overlay.addEventListener("click", hideOverlay);
