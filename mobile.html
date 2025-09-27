@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Mjolnir - Mobile</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link rel="stylesheet" href="mobile.css">
+    <link rel="stylesheet" href="https://use.typekit.net/cjl7abj.css">
+    <script type="text/javascript" src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+</head>
+
+<body>
+    <!-- Landing Video Page -->
+    <div class="mobile-page" id="videoPage">
+        <div class="mobile-header">
+            <img class="mobile-logo" src="https://res.cloudinary.com/dcix4vvth/image/upload/f_auto,q_auto/v1/Mjolnir/Logo">
+            <h1>OPEN SOURCE ADAPTIVE MTB</h1>
+        </div>
+        <div class="mobile-video-container">
+            <video autoplay loop muted id="mobileBackgroundVideo">
+                <source src="https://res.cloudinary.com/dcix4vvth/video/upload/v1714098321/Mjolnir/Media/Landing%20Video.mov" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <!-- Mobile Resources Overlay - Triggered by scroll up -->
+    <div class="mobile-resources-overlay" id="mobileResourcesOverlay">
+        <div class="mobile-resources-content">
+            <h1>Resources</h1>
+            <p>Download CAD files to build your own Project Mjolnir adaptive mountain bike.</p>
+            
+            <div class="mobile-downloads">
+                <h2>Downloads</h2>
+                <a href="https://grabcad.com/library/mjolnir-full-suspension-frame-assembly-1">
+                    <button class="mobile-download-btn">Full Suspension Bike</button>
+                </a>
+                <a href="https://grabcad.com/library/mjolnir-rigid-frame-assembly-1">
+                    <button class="mobile-download-btn">Rigid Frame Bike</button>
+                </a>
+            </div>
+            
+            <div class="mobile-video">
+                <h2>Build Video</h2>
+                <iframe width="100%" height="200px" src="https://www.youtube.com/embed/USW2eAnqw9s?si=fPLcJCv3EKNgxi7F" 
+                        title="YouTube video player" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Page -->
+    <div class="mobile-page" id="galleryPage">
+        <div class="mobile-gallery-grid">
+            <img src="Media/T1.jpeg" alt="Test Image 1">
+            <img src="Media/T2.jpeg" alt="Test Image 2">
+            <img src="Media/T3.jpeg" alt="Test Image 3">
+            <img src="Media/T4.jpeg" alt="Test Image 4">
+            <img src="Media/G1.JPG" alt="Gallery Image 1">
+            <img src="Media/G2.JPG" alt="Gallery Image 2">
+            <img src="Media/G3.JPG" alt="Gallery Image 3">
+            <img src="Media/O1.JPG" alt="Other Image 1">
+            <img src="Media/O2.JPG" alt="Other Image 2">
+            <img src="Media/O3.JPG" alt="Other Image 3">
+            <img src="Media/O4.JPG" alt="Other Image 4">
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div class="mobile-page" id="aboutPage">
+        <div class="mobile-about-content">
+            <h1>Project Mjolnir</h1>
+            <h2>/ˈmyɔl nɪr/</h2>
+            <p>is an open source adaptive mountain bike project created for wheelchair users.</p>
+            <p>The frame concept is based on a modular platform that enables builders to construct and develop their own adaptive MTB cost-effectively.</p>
+            <p>As the components can be made by any capable machine shop or via online rapid prototyping outlets most parts can be manufactured and delivered almost anywhere in the world. Individuals can customize any element of the frame to suit their specific requirements.</p>
+            <p>This project is being developed as part of NYU Tandon's VIP program.</p>
+            
+            <div class="mobile-3d-container">
+                <iframe class="mobile-sketchfab" id="mobile-api-frame" 
+                        allow="autoplay; fullscreen" 
+                        src="about:blank">
+                    Loading 3D Model...
+                </iframe>
+            </div>
+            
+            <a href="https://risingviolets.nyu.edu/" class="mobile-donate-link">
+                <button class="mobile-donate-btn">Donate</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- Image Overlay for Gallery -->
+    <div id="mobile-overlay-background"></div>
+    <img id="mobile-image-overlay" alt="Enlarged view">
+
+    <script src="mobile.js"></script>
+</body>
+</html>

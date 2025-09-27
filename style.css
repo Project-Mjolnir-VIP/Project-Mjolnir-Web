@@ -9,6 +9,11 @@ body {
   scroll-behavior: smooth;
   will-change: scroll-position;
 }
+
+/* Ensure page starts at video position, not at top */
+html {
+  scroll-padding-top: 0;
+}
 html,
 body {
   margin: 0;
@@ -45,12 +50,12 @@ p {
 .page-container {
   display: block;
   width: 100vw;
-  height: 200vh; /* Two full-height pages */
+  height: 220vh; /* 120vh first page + 100vh second page */
 }
 
 .vertical-sections {
   width: 100vw;
-  height: 200vh;
+  height: 220vh;
   display: flex;
   flex-direction: column;
 }
@@ -74,17 +79,32 @@ p {
 #pageUp {
   position: relative; /* Ensure positioning context for the video container */
   width: 100vw;
-  height: 100vh; /* Full height to contain both video and gallery */
+  height: 120vh; /* Extended height to contain 90vh video + 30vh gallery */
   overflow: hidden; /* Prevent any overflow from the video */
   z-index: 2;
   flex-shrink: 0;
+  justify-content: flex-start; /* Override center alignment */
+  align-items: flex-start; /* Override center alignment */
+}
+
+/* Top layout container for parallel video and gallery */
+.top-layout {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 120vh; /* 90vh + 30vh */
+  margin: 0;
+  padding: 0;
 }
 
 .video-section {
   position: relative;
   width: 100vw;
-  height: 80vh;
+  height: 90vh;
   overflow: hidden;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .video-container {
@@ -93,6 +113,8 @@ p {
   left: 0;
   width: 100%;
   height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 #backgroundVideo {
@@ -161,7 +183,7 @@ p {
   position: absolute;
   top: 0;
   width: 16%; /* Reduced to match logo width */
-  height: 80vh; /* Match the video section height */
+  height: 90vh; /* Match the video section height */
   background-color: whitesmoke; /* Example semi-transparent white */
   z-index: 3; /* Ensure it's above the video */
   /* Other styling as needed, similar to other sidebars */
@@ -190,7 +212,6 @@ p {
 
 .right-sidebar {
   width: 25%;
-  background-color: whitesmoke;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -201,36 +222,53 @@ p {
   justify-content: flex-start;
   padding: 0%;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.95);
-  transition: right 0.4s ease;
+
+  /* Glassmorphism Effect */
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-right: none;
+
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   overflow-y: auto;
-  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
 }
 
 .right-sidebar:hover {
   right: 0; /* Slide in completely on hover */
+  box-shadow: -20px 0 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Add a small visible tab on the right edge */
+/* Glassmorphism tab on the right edge */
 .right-sidebar::before {
   content: "Resources";
   position: absolute;
-  left: -40px;
+  left: -45px;
   top: 50%;
   transform: translateY(-50%) rotate(-90deg);
-  background-color: rgba(255, 69, 0, 0.9);
+
+  /* Glassmorphism Tab */
+  background: rgba(255, 69, 0, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
   color: white;
-  padding: 10px 15px;
+  padding: 12px 20px;
   font-size: 12pt;
   font-family: ubuntu;
-  border-radius: 5px 5px 0 0;
+  border-radius: 8px 8px 0 0;
   cursor: pointer;
   z-index: 31;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(255, 69, 0, 0.3);
 }
 
 .right-sidebar:hover::before {
-  opacity: 0.7;
+  background: rgba(255, 69, 0, 0.9);
+  box-shadow: 0 6px 25px rgba(255, 69, 0, 0.4);
+  transform: translateY(-50%) rotate(-90deg) scale(1.05);
 }
 
 .LOGO {
@@ -341,11 +379,18 @@ p {
 .api-container {
   pointer-events: auto;
   position: absolute;
-  z-index: 10;
-  /* padding-right: 10%; */
+  z-index: 5;
   height: 100vh;
-  width: 100%;
+  width: 115vw; /* Extend 15vw beyond viewport */
   overflow-x: hidden;
+  left: -15vw; /* Start 15vw to the left of viewport */
+  top: 0;
+  background-color: rgba(
+    100,
+    100,
+    100,
+    0.1
+  ); /* Temporary background to debug */
 }
 .sketchfab {
   pointer-events: auto;
@@ -353,6 +398,13 @@ p {
   width: 100%;
   border: 0;
   overflow: hidden;
+  background-color: rgba(
+    200,
+    200,
+    200,
+    0.2
+  ); /* Temporary background to see if iframe is there */
+  min-height: 400px; /* Ensure minimum height */
 }
 
 .api-container::-webkit-scrollbar {
@@ -383,37 +435,56 @@ p {
   animation: blink-animation 2s infinite;
 }
 
-/* Image Gallery at bottom of first page */
+/* Image Gallery - stacked below video section */
 .landing-gallery {
   width: 100vw;
-  height: 20vh;
+  height: 30vh;
   background-color: rgba(245, 245, 245, 0.95);
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  overflow-x: auto;
+  overflow-x: hidden; /* Hide scrollbar */
   overflow-y: hidden;
   padding: 0;
   box-sizing: border-box;
   z-index: 4;
   flex-shrink: 0;
+  position: relative;
 }
 
+/* Hide all scrollbars for gallery */
 .landing-gallery::-webkit-scrollbar {
-  height: 4px;
+  display: none;
 }
 
-.landing-gallery::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+/* Scrolling container for automatic animation */
+.gallery-scroll-container {
+  display: flex;
+  width: 300%; /* Triple width to contain 3 sets of images */
+  height: 100%;
+  animation: auto-scroll 60s linear infinite; /* 60 second slow scroll */
 }
 
-.landing-gallery::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 2px;
+.gallery-scroll-container img {
+  height: 30vh;
+  width: auto;
+  margin: 0;
+  border-radius: 0;
+  cursor: zoom-in;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;
+  display: block;
+}
+
+.gallery-scroll-container img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+  position: relative;
 }
 
 .landing-gallery img {
-  height: 20vh;
+  height: 30vh;
   width: auto;
   margin: 0;
   border-radius: 0;
@@ -432,37 +503,56 @@ p {
   position: relative;
 }
 
-/* Resources styles */
+/* Auto-scrolling animation for gallery */
+@keyframes auto-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.33%); /* Scroll through one set (1/3 of total) */
+  }
+}
+
+/* Resources styles with glassmorphism */
 .Resources {
-  padding: 10%;
+  padding: 8%;
   left: 0;
 }
 
 .Resources p {
   margin: 0;
   padding: 0;
-  padding-top: 8%;
+  padding-top: 6%;
+  color: rgba(0, 0, 0, 0.8);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
 }
 
 .Resources h1 {
   padding: 0%;
   font-size: 24pt;
   text-align: left;
+  color: rgba(0, 0, 0, 0.9);
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.6);
+  margin-bottom: 10px;
 }
 
 .Resources h2 {
-  padding-top: 10%;
-  padding-bottom: 5%;
+  padding-top: 8%;
+  padding-bottom: 4%;
   margin: 0;
   font-size: 18pt;
   text-align: left;
+  color: rgba(0, 0, 0, 0.8);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
 }
 
 .Resources h3 {
   font-size: 14pt;
   text-align: left;
   padding: 0%;
-  margin: 0%;
+  margin: 8px 0 4px 0;
+  color: rgba(0, 0, 0, 0.7);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
 }
 
 .download {
@@ -471,14 +561,23 @@ p {
   font-size: 12pt;
   font-family: ubuntu;
   border: none;
-  padding: 2%;
+  padding: 12px 16px;
   z-index: 11;
   cursor: pointer;
   width: 100%;
   text-align: left;
   text-decoration: none;
-  transition: all 0.3s ease;
-  background-color: orangered;
+  margin: 6px 0;
+  border-radius: 8px;
+
+  /* Glassmorphism Button */
+  background: rgba(255, 69, 0, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(255, 69, 0, 0.2);
+
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .download a {
@@ -487,30 +586,221 @@ p {
 }
 
 .download:hover {
-  background-color: rgb(190, 51, 0);
-  transform: scale(1.05);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 69, 0, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 69, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 #FSButton {
-  margin-bottom: 10%;
+  margin-bottom: 8px;
 }
 
-/* Resources iframe styling */
+/* Glassmorphism iframe styling */
 .Resources iframe {
   width: 100%;
-  border: 0;
-  border-radius: 4px;
-  margin-bottom: 15px;
-}
-
-.Resources h3 {
-  margin-top: 15px;
-  margin-bottom: 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  margin: 10px 0 15px 0;
 }
 
 .right-sidebar::-webkit-scrollbar {
   display: none;
+}
+
+/* Scroll-Up Triggered Resources Overlay - Compressed */
+.scroll-resources-overlay {
+  position: fixed;
+  top: -60vh; /* Smaller overlay, hidden above viewport */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 600px;
+  height: 60vh; /* Compressed height */
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  z-index: 60;
+  transition: top 0.4s ease;
+  overflow-y: auto;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: none; /* Hidden by default, shown on mobile */
+}
+
+.scroll-resources-overlay.active {
+  top: 20vh; /* Slide down but not to cover entire screen */
+}
+
+.scroll-resources-overlay .Resources {
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+}
+
+.scroll-resources-overlay .Resources h1 {
+  font-size: 22pt;
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.scroll-resources-overlay .Resources h2 {
+  font-size: 16pt;
+  margin: 15px 0 8px 0;
+  color: #444;
+}
+
+.scroll-resources-overlay .Resources p {
+  font-size: 10pt;
+  line-height: 1.4;
+  margin: 0 0 15px 0;
+  color: #666;
+}
+
+.download-section {
+  margin: 15px 0;
+}
+
+.video-section {
+  margin: 0;
+}
+
+.scroll-resources-overlay .Resources iframe {
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
+}
+
+.scroll-resources-overlay .download {
+  font-size: 11pt;
+  padding: 8px 16px;
+  margin: 5px 10px;
+  border-radius: 6px;
+  width: auto;
+  min-width: 200px;
+  display: inline-block;
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+  /* Hide desktop sidebar on mobile */
+  .right-sidebar {
+    display: none;
+  }
+
+  /* Show scroll-triggered resources overlay on mobile */
+  .scroll-resources-overlay {
+    display: block;
+    width: 95%;
+    max-width: none;
+  }
+
+  .scroll-resources-overlay.active {
+    top: 15vh; /* Slightly higher on mobile */
+  }
+
+  .scroll-resources-overlay .download {
+    display: block;
+    width: 90%;
+    margin: 8px auto;
+    min-width: auto;
+  }
+
+  /* Adjust mobile layout */
+  .sidebar {
+    width: 20%;
+    transform: translateX(5%);
+  }
+
+  .top-sidebar {
+    width: 20%;
+    height: 80vh;
+  }
+
+  .LOGO {
+    width: 15vw;
+  }
+
+  .top-sidebar h1 {
+    font-size: 16pt;
+    padding-top: 18vw;
+  }
+
+  #threeContainer {
+    padding-left: 22%;
+    padding-right: 0;
+  }
+
+  .landing-gallery img {
+    height: 15vh;
+  }
+
+  .video-section {
+    height: 70vh;
+  }
+
+  .landing-gallery {
+    height: 15vh;
+  }
+
+  /* Mobile typography */
+  h1 {
+    font-size: 20pt;
+  }
+  h2 {
+    font-size: 16pt;
+  }
+  h3 {
+    font-size: 12pt;
+  }
+  p {
+    font-size: 10pt;
+  }
+
+  /* Mobile resources content */
+  .mobile-resources .Resources {
+    padding: 60px 5% 5% 5%;
+  }
+
+  .mobile-resources .Resources h1 {
+    font-size: 20pt;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .mobile-resources .Resources h2 {
+    font-size: 16pt;
+    margin: 15px 0 10px 0;
+  }
+
+  .mobile-resources .Resources h3 {
+    font-size: 12pt;
+    margin: 10px 0 5px 0;
+  }
+
+  .mobile-resources .Resources p {
+    font-size: 10pt;
+    line-height: 1.4;
+  }
+
+  .mobile-resources .Resources iframe {
+    height: 250px;
+    margin-bottom: 20px;
+  }
+
+  .download {
+    font-size: 10pt;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+}
+
+/* Desktop only - hide mobile resources page */
+@media screen and (min-width: 769px) {
+  .mobile-resources-page {
+    display: none;
+  }
 }
 
 /* Blinking Animation */

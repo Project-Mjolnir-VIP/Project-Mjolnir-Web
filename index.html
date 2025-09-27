@@ -9,66 +9,158 @@
     <link rel="stylesheet" href="https://use.typekit.net/cjl7abj.css">
     <script type="text/javascript" src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.polyfills.min.js"></script>
+    
+    <!-- Mobile Device Detection and Redirect -->
+    <script>
+      const MOBILE_BREAKPOINT = 768; // Same breakpoint as CSS media queries
+      
+      // Enhanced mobile detection and redirect
+      function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+               window.innerWidth <= MOBILE_BREAKPOINT;
+      }
+      
+      // Force refresh if screen becomes too narrow for desktop
+      function checkScreenSize() {
+        if (window.innerWidth <= MOBILE_BREAKPOINT) {
+          console.log("Screen too narrow for desktop, redirecting to mobile version");
+          window.location.href = 'mobile.html';
+        }
+      }
+      
+      // Initial redirect check
+      if (isMobileDevice() && !window.location.pathname.includes('mobile.html')) {
+        window.location.href = 'mobile.html';
+      }
+      
+      // Add resize listeners after page loads
+      window.addEventListener('load', function() {
+        window.addEventListener('resize', checkScreenSize);
+        window.addEventListener('orientationchange', function() {
+          setTimeout(checkScreenSize, 100); // Delay for accurate dimensions
+        });
+      });
+    </script>
 	</head>
 
 	<body>
     <div class="page-container" id="pageContainer">
       <div class="vertical-sections">
       <div class="page" id="pageUp">
-        <div class="video-section">
-          <div class="sidebar top-sidebar"> 
-            <img class="LOGO" src="https://res.cloudinary.com/dcix4vvth/image/upload/f_auto,q_auto/v1/Mjolnir/Logo">
-            <h1>OPEN SOURCE ADAPTIVE MTB</h1>
+        <div class="top-layout">
+          <div class="video-section">
+            <div class="sidebar top-sidebar"> 
+              <img class="LOGO" src="https://res.cloudinary.com/dcix4vvth/image/upload/f_auto,q_auto/v1/Mjolnir/Logo">
+              <h1>OPEN SOURCE ADAPTIVE MTB</h1>
+            </div>
+            <div class="video-container">
+              <video autoplay loop muted id="backgroundVideo">
+                  <source src="https://res.cloudinary.com/dcix4vvth/video/upload/v1714098321/Mjolnir/Media/Landing%20Video.mov" type="video/mp4">
+                  Your browser does not support the video tag.
+              </video>
+            </div>
           </div>
-          <div class="video-container">
-            <video autoplay loop muted id="backgroundVideo">
-                <source src="https://res.cloudinary.com/dcix4vvth/video/upload/v1714098321/Mjolnir/Media/Landing%20Video.mov" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+          <div class="landing-gallery">
+            <div class="gallery-scroll-container">
+              <!-- First set of images -->
+              <img src="Media/T1.jpeg">
+              <img src="Media/T2.jpeg">
+              <img src="Media/T3.jpeg">
+              <img src="Media/T4.jpeg">
+              <img src="Media/G1.JPG">
+              <img src="Media/G2.JPG">
+              <img src="Media/G3.JPG">
+              <img src="Media/O1.JPG">
+              <img src="Media/O2.JPG">
+              <img src="Media/O3.JPG">
+              <img src="Media/O4.JPG">
+              <!-- Second set for seamless loop -->
+              <img src="Media/T1.jpeg">
+              <img src="Media/T2.jpeg">
+              <img src="Media/T3.jpeg">
+              <img src="Media/T4.jpeg">
+              <img src="Media/G1.JPG">
+              <img src="Media/G2.JPG">
+              <img src="Media/G3.JPG">
+              <img src="Media/O1.JPG">
+              <img src="Media/O2.JPG">
+              <img src="Media/O3.JPG">
+              <img src="Media/O4.JPG">
+              <!-- Third set for extra smooth loop -->
+              <img src="Media/T1.jpeg">
+              <img src="Media/T2.jpeg">
+              <img src="Media/T3.jpeg">
+              <img src="Media/T4.jpeg">
+              <img src="Media/G1.JPG">
+              <img src="Media/G2.JPG">
+              <img src="Media/G3.JPG">
+              <img src="Media/O1.JPG">
+              <img src="Media/O2.JPG">
+              <img src="Media/O3.JPG">
+              <img src="Media/O4.JPG">
+            </div>
           </div>
-        </div>
-        <div class="landing-gallery">
-          <img src="Media/T1.jpeg">
-          <img src="Media/T2.jpeg">
-          <img src="Media/T3.jpeg">
-          <img src="Media/T4.jpeg">
-          <img src="Media/G1.JPG">
-          <img src="Media/G2.JPG">
-          <img src="Media/G3.JPG">
-          <img src="Media/O1.JPG">
-          <img src="Media/O2.JPG">
-          <img src="Media/O3.JPG">
-          <img src="Media/O4.JPG">
         </div>
       </div>
 
       <div class="page" id="pageLeft">
-        <div id="threeContainer"></div> 
-          <div class="sidebar" id="bottomSidebar">
-              <div class="sidebar-content">
-              <div class="description">  
-                <h2>Project Mjolnir </h2>
-                <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ˈmyɔl nɪr/</h2>
-                <p>&nbsp;&nbsp;&nbsp;&nbsp;is an open source adaptive mountain bike project created for wheelchair users. </p>
-                <p>The frame concept is based on a modular platform that enables builders to construct and develop their own adaptive MTB cost-effectively. </p>
-                <p>As the components can be made by any capable machine shop or via online rapid prototyping outlets most parts can be manufactured and delivered almost anywhere in the world. Individuals can customize any element of the frame to suit their specific requirements. This project is being developed as part of NYU Tandon's VIP program.
-                </p>
-              </div>
-              </div>
-              <a href="https://risingviolets.nyu.edu/">
-                <button id="sidebarButton">Donate</button>
-            </a>
-          </div>
+        <div class="sidebar" id="bottomSidebar">
+            <div class="sidebar-content">
+            <div class="description">  
+              <h2>Project Mjolnir </h2>
+              <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ˈmyɔl nɪr/</h2>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;is an open source adaptive mountain bike project created for wheelchair users. </p>
+              <p>The frame concept is based on a modular platform that enables builders to construct and develop their own adaptive MTB cost-effectively. </p>
+              <p>As the components can be made by any capable machine shop or via online rapid prototyping outlets most parts can be manufactured and delivered almost anywhere in the world. Individuals can customize any element of the frame to suit their specific requirements. This project is being developed as part of NYU Tandon's VIP program.
+              </p>
+            </div>
+            </div>
+            <a href="https://risingviolets.nyu.edu/">
+              <button id="sidebarButton">Donate</button>
+          </a>
+        </div>
 
-
-          <div class="api-container">
-            <iframe class="sketchfab" id="api-frame" allow="autoplay; fullscreen" sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-popups allow-forms"></iframe></div>
-
+        <div class="api-container">
+          <iframe class="sketchfab" id="api-frame" 
+                  allow="autoplay; fullscreen" 
+                  src="about:blank">
+            Loading 3D Model...
+          </iframe>
+        </div>
       </div>
       </div>
       </div>
       
-      <!-- Global Resources Sidebar - appears on all pages -->
+      <!-- Scroll-Up Triggered Resources Overlay -->
+      <div class="scroll-resources-overlay" id="scrollResourcesOverlay">
+        <div class="Resources">
+            <h1>Resources</h1>
+            <p>Download CAD files to build your own Project Mjolnir adaptive mountain bike.</p>
+            
+            <div class="download-section">
+              <h2>Downloads</h2>
+              <a href="https://grabcad.com/library/mjolnir-full-suspension-frame-assembly-1"><button class="download">Full Suspension Bike</button></a>
+              <a href="https://grabcad.com/library/mjolnir-rigid-frame-assembly-1"><button class="download">Rigid Frame Bike</button></a>
+            </div>
+            
+            <div class="video-section">
+              <h2>Build Video</h2>
+              <iframe width="90%" height="200px" src="https://www.youtube.com/embed/USW2eAnqw9s?si=fPLcJCv3EKNgxi7F" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            
+            <!-- Cadasio assembly instructions hidden for now -->
+            <!-- 
+            <h2>Assembly Instructions</h2>
+            <h3>Front Fork Assembly</h3>
+            <iframe src='https://instructions.online/?id=9782-mjolnir%20full%20suspension%20front%20fork%20website&stepid=d11a1048-dcdb-47aa-b1de-c41c2a090bcd' width='90%' height='300px' allowfullscreen></iframe>
+            
+            <h3>Rear Frame Assembly</h3>
+            <iframe src='https://instructions.online/?id=9782-mjolnir%20full%20suspension%20rear%20frame%20website&stepid=a7132cca-706d-460a-98db-755f838cf56e' width='90%' height='300px' allowfullscreen></iframe>
+            -->
+        </div>
+      </div>
+      
+      <!-- Desktop Resources Sidebar - appears on all pages -->
       <div class="right-sidebar" id="resourcesSidebar">
           <div class="sidebar-content">
           <div class="Resources">
@@ -91,6 +183,7 @@
           </div>
           </div>
       </div>
+
   </div>
 
 <script src="main.js"></script>

@@ -1,4 +1,51 @@
 document.addEventListener("DOMContentLoaded", function () {
+  const resourcesOverlay = document.getElementById("scrollResourcesOverlay");
+  let isResourcesVisible = false;
+
+  // Simple scroll-up trigger - show resources when trying to scroll above the top
+  window.addEventListener(
+    "wheel",
+    function (e) {
+      const currentScrollY = window.scrollY;
+      const scrollingUp = e.deltaY < 0; // Negative deltaY means scrolling up
+
+      console.log("Wheel event:", {
+        currentScrollY,
+        scrollingUp,
+        deltaY: e.deltaY,
+      });
+
+      // If at the top (video page) and trying to scroll up, show resources
+      if (currentScrollY <= 50 && scrollingUp && !isResourcesVisible) {
+        console.log("Showing resources overlay");
+        e.preventDefault();
+        isResourcesVisible = true;
+        if (resourcesOverlay) {
+          resourcesOverlay.classList.add("active");
+        }
+      }
+      // If resources are visible and scrolling down, hide them
+      else if (isResourcesVisible && !scrollingUp) {
+        console.log("Hiding resources overlay");
+        isResourcesVisible = false;
+        if (resourcesOverlay) {
+          resourcesOverlay.classList.remove("active");
+        }
+      }
+    },
+    { passive: false }
+  );
+
+  // Close resources overlay when clicking outside content area
+  if (resourcesOverlay) {
+    resourcesOverlay.addEventListener("click", function (e) {
+      if (e.target === resourcesOverlay) {
+        isResourcesVisible = false;
+        resourcesOverlay.classList.remove("active");
+      }
+    });
+  }
+
   window.addEventListener("scroll", function () {
     const fadeEffectThreshold = window.innerHeight; // Adjust threshold as needed
     const opacity = 1 - Math.min(window.scrollY / fadeEffectThreshold, 1);
@@ -40,7 +87,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   };
 
-  loadSketchfab("823f7f95ba5145e18b052c5e95097dbd", "api-frame");
+  // Delay Sketchfab loading to ensure iframe is ready
+  setTimeout(() => {
+    const iframe = document.getElementById("api-frame");
+    if (iframe) {
+      console.log("Loading Sketchfab model...");
+      loadSketchfab("823f7f95ba5145e18b052c5e95097dbd", "api-frame");
+    } else {
+      console.error("Sketchfab iframe not found!");
+    }
+  }, 1000);
 
   // Optimized scroll handling for Sketchfab iframe
   const apiContainer = document.querySelector(".api-container");
@@ -273,4 +329,59 @@ document.addEventListener("DOMContentLoaded", function () {
   // Add a click listener to the overlay to hide it when clicked
   overlay.addEventListener("click", hideOverlay);
   overlayBg.addEventListener("click", hideOverlay);
+
+  // Mobile resources panel functionality
+  const mobileResourcesPanel = document.getElementById("mobileResourcesPanel");
+  if (mobileResourcesPanel) {
+    let startY = 0;
+    let currentY = 0;
+    let isExpanded = false;
+
+    // Touch event handlers for mobile swipe
+    mobileResourcesPanel.addEventListener(
+      "touchstart",
+      function (e) {
+        startY = e.touches[0].clientY;
+      },
+      { passive: true }
+    );
+
+    mobileResourcesPanel.addEventListener(
+      "touchmove",
+      function (e) {
+        currentY = e.touches[0].clientY;
+        const deltaY = startY - currentY;
+
+        // If swiping up and panel is not expanded, expand it
+        if (deltaY > 50 && !isExpanded) {
+          mobileResourcesPanel.classList.add("active");
+          isExpanded = true;
+        }
+        // If swiping down and panel is expanded, collapse it
+        else if (deltaY < -50 && isExpanded) {
+          mobileResourcesPanel.classList.remove("active");
+          isExpanded = false;
+        }
+      },
+      { passive: true }
+    );
+
+    // Click on tab to toggle
+    mobileResourcesPanel.addEventListener("click", function (e) {
+      // Only toggle if clicking near the top (tab area)
+      const rect = mobileResourcesPanel.getBoundingClientRect();
+      const clickY = e.clientY - rect.top;
+
+      if (clickY < 60) {
+        // Top 60px is the tab area
+        if (isExpanded) {
+          mobileResourcesPanel.classList.remove("active");
+          isExpanded = false;
+        } else {
+          mobileResourcesPanel.classList.add("active");
+          isExpanded = true;
+        }
+      }
+    });
+  }
 });
