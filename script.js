@@ -38,16 +38,12 @@ function selectHotspot(id) {
     renderHotspot();
 }
 
-function renderHotspot() {
+function renderHotspot(shouldScroll = true) {
     // 1. Update active pin indicator on canvas/mini-map
     [1, 2, 3, 4].forEach(i => {
         const pin = document.getElementById(`hotspot-pin-${i}`);
         if (pin && pin.parentElement) {
-            if (i === (currentIdx + 1)) {
-                pin.parentElement.classList.add('active');
-            } else {
-                pin.parentElement.classList.remove('active');
-            }
+            pin.parentElement.classList.toggle('active', i === (currentIdx + 1));
         }
     });
 
@@ -55,20 +51,19 @@ function renderHotspot() {
     [1, 2, 3, 4].forEach(i => {
         const card = document.getElementById(`feature-card-${i}`);
         if (card) {
-            if (i === (currentIdx + 1)) {
-                card.classList.add('active');
-            } else {
-                card.classList.remove('active');
-            }
+            card.classList.toggle('active', i === (currentIdx + 1));
         }
     });
 
-    // 3. Scroll to target feature card on mobile screens
-    if (window.innerWidth < 1024) {
+    // 3. Scroll ONLY the horizontal track (never the whole window)
+    if (shouldScroll && window.innerWidth < 1024) {
         const track = document.getElementById('featuresTrack');
         const activeCard = document.getElementById(`feature-card-${currentIdx + 1}`);
         if (track && activeCard) {
-            activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+            track.scrollTo({
+                left: activeCard.offsetLeft - track.offsetLeft,
+                behavior: 'smooth'
+            });
         }
     }
 }
@@ -129,7 +124,7 @@ function calculateTimelineTarget() {
 
     if (scrollDistance <= 0) return;
 
-    const headerOffset = window.innerWidth <= 768 ? 70 : 80;
+    const headerOffset = document.querySelector('.header')?.offsetHeight || 80;
     let scrolled = headerOffset - rect.top;
     let progress = scrolled / scrollDistance;
     progress = Math.max(0, Math.min(1, progress));
@@ -198,7 +193,7 @@ function scrollToPhase(index) {
     const targetProgress = index / (totalCards - 1);
     
     const sectionTop = timelineSection.getBoundingClientRect().top + window.scrollY;
-    const headerOffset = window.innerWidth <= 768 ? 70 : 80;
+    const headerOffset = document.querySelector('.header')?.offsetHeight || 80;
     const targetScrollY = (sectionTop - headerOffset) + (targetProgress * scrollDistance);
 
     window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
@@ -240,7 +235,7 @@ function closeContactModal() {
 window.addEventListener('scroll', calculateTimelineTarget, { passive: true });
 window.addEventListener('resize', () => {
     calculateTimelineTarget();
-    renderHotspot();
+    renderHotspot(false);
 });
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -260,6 +255,6 @@ window.addEventListener('DOMContentLoaded', () => {
         updateFeaturesProgress();
     }
 
-    renderHotspot();
+    renderHotspot(false);
     calculateTimelineTarget();
 });
