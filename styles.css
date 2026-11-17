@@ -65,6 +65,7 @@ button, input, select { font-family: inherit; }
 
 .text-accent {
     background: linear-gradient(135deg, #f97316 0%, #ff7828 50%, #ea580c 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
