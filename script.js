@@ -2,7 +2,10 @@
 function scrollStories(direction) {
     const track = document.getElementById('storiesTrack');
     if (track) {
-        track.scrollBy({ left: direction * 440, behavior: 'smooth' });
+        const card = track.querySelector('.story-card');
+        const gap = parseFloat(getComputedStyle(track).gap) || 24;
+        const step = card ? (card.offsetWidth + gap) : 440;
+        track.scrollBy({ left: direction * step, behavior: 'smooth' });
     }
 }
 
